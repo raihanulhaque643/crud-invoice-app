@@ -5,11 +5,22 @@ import './App.css';
 import AuthPage from './pages/AuthPage';
 import ResponsiveDrawer from './pages/ResponsiveDrawer';
 
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from 'react-router-dom';
+
 function App() {
   return (
     <div className="App">
-      <AuthPage />
-      {/* <ResponsiveDrawer /> */}
+      <Switch>
+        <Route exact path="/">
+          <AuthPage />
+        </Route>
+        <Route path="/home">
+        <ResponsiveDrawer />
+        </Route>
+        <Route path="">
+          <h1>Eror 404! Component not found</h1>
+        </Route>
+      </Switch>
     </div>
   );
 }
