@@ -26,6 +26,12 @@ form > button {
     padding: 10px;
     margin: 10px 5px;
     font-size: 24px;
+    outline: none;
+}
+
+form > button:hover {
+    background-color: rgba(86, 86, 241, 0.788);
+    cursor: pointer;
 }
 
 .container {
