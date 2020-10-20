@@ -69,4 +69,7 @@ form > button {
     .signup {
         width: 250px;
     }
+    form > button {
+        font-size: 16px;
+    }
   }
