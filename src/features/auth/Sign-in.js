@@ -9,12 +9,10 @@ const Signin = () => {
                     <label htmlFor="email">Email</label>
                     <input 
                     placeholder="Email"
-                    id="email"
                     type="email"/>
                     <label htmlFor="password">Password</label>
                     <input 
                     placeholder="Password"
-                    id="password"
                     type="password"/>
                     <button>Sign in</button>
                 </form>

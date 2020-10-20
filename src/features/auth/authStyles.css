@@ -41,7 +41,7 @@ form > button {
 
 .signin {
     width: 400px;
-    margin: 0px 20px;
+    margin: 20px;
     background-color: rgba(169, 169, 169, 0.356);
     max-height: 500px;
     border-radius: 30px;
@@ -56,3 +56,17 @@ form > button {
     border-radius: 30px;
     padding: 20px;
 }
+
+@media screen and (max-width: 700px) {
+    .container {
+        flex-direction: column;
+        font-size: small;
+        overflow: scroll;
+    }
+    .signin {
+        width: 250px;
+    }
+    .signup {
+        width: 250px;
+    }
+  }
