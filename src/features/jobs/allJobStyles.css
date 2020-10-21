@@ -1,6 +1,7 @@
 .jobContainerParent {
     background-color: rgb(48, 48, 48);
     height: 100vh;
+    padding-top: 20px;
 }
 
 .jobRow{
