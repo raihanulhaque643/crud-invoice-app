@@ -1,7 +1,8 @@
 form {
     display: flex;
     flex-direction: column;
-    max-width: 400px;
+    /* max-width: 400px; */
+    width: 100%;
 }
 
 form > label {
@@ -16,6 +17,18 @@ form > input {
     border-color: lightgray;
     background-color: rgb(241, 241, 241);
     outline: none;
+}
+
+form > textarea {
+    padding: 8px;
+    margin: 5px;
+    border-radius: 5px;
+    border-width: 0.05mm;
+    border-color: lightgray;
+    background-color: rgb(241, 241, 241);
+    outline: none;
+    resize: none;
+    height: 100px;
 }
 
 form > button {
