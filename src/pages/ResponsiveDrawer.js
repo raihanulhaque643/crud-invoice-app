@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
+      backgroundColor: '#DC143C'
     },
   },
   menuButton: {
@@ -126,7 +127,7 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Responsive drawer
+            Car Garage
           </Typography>
         </Toolbar>
       </AppBar>

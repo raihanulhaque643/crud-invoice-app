@@ -1,0 +1,29 @@
+.jobContainerParent {
+    background-color: rgb(48, 48, 48);
+    height: 100vh;
+}
+
+.jobRow{
+    display: flex;
+    background-color: rgba(169, 169, 169, 0.356);
+    padding: 20px;
+    margin: 20px;
+    margin-top: 0px;
+    color: white;
+    border-radius: 20px;
+}
+
+.jobCol {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 15px;
+    width: 120px;
+}
+
+.jobEditButton {
+    border: none;
+    border-radius: 20px;
+    height: 40px;
+    background-color: #000;
+    color: white;
+}

@@ -13,7 +13,8 @@ export const counterSlice = createSlice({
             year: '2005',
             services: 'Paint job',
             costing: '50000',
-            serviceCharge: '15000'
+            serviceCharge: '15000',
+            date: '14-08-2020'
         },
         {
             jobId: '2',
@@ -24,7 +25,8 @@ export const counterSlice = createSlice({
             year: '2010',
             services: 'New gear box installation',
             costing: '80000',
-            serviceCharge: '18000'
+            serviceCharge: '18000',
+            date: '1-06-2020'
         },
         {
             jobId: '3',
@@ -35,7 +37,8 @@ export const counterSlice = createSlice({
             year: '2017',
             services: 'Clutch repair',
             costing: '2500',
-            serviceCharge: '2000'
+            serviceCharge: '2000',
+            date: '17-08-2020'
         }
     ],
   },

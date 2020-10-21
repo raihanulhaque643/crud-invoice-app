@@ -7,10 +7,18 @@ const AllJobs = () => {
   const jobs = useSelector(selectJobs);
   const dispatch = useDispatch();
     return (
-        <div>
+        <div className="jobContainerParent">
             {jobs.map((job) => (
-        <div className="job" key={job.jobId}>{job.clientName}</div>
-        ))}
+                <div className="jobRow" key={job.jobId}>
+                    <div className="jobCol"><div>Invoice:</div> {job.jobId}</div>
+                    <div className="jobCol"><div>Client Name:</div> {job.clientName}</div>
+                    <div className="jobCol"><div>Contact:</div> {job.contactNumber}</div>
+                    <div className="jobCol"><div>Model:</div> {job.model}</div>
+                    <div className="jobCol"><div>Services:</div> {job.services}</div>
+                    <div className="jobCol"><div>Date:</div> {job.date}</div>
+                    <div className="jobCol"><button className="jobEditButton">Edit</button></div>
+                </div>
+            ))}
         </div>
     )
 }
