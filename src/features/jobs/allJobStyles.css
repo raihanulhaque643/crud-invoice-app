@@ -23,8 +23,34 @@
 
 .jobEditButton, .jobViewButton {
     border: none;
+    outline: none;
     border-radius: 20px;
     height: 40px;
     background-color: #000;
     color: white;
+    cursor: pointer;
+}
+
+.jobEditButton:hover, .jobViewButton:hover{
+    background-color: white;
+    color: black;
+}
+
+.addJobButton {
+    background-color: rgba(86, 86, 241, 0.986);
+    height: 60px;
+    width: 60px;
+    border-radius: 10%;
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    color: white;
+    cursor: pointer;
+    font-size: 30px;
+    outline: none;
+    border: none;
+}
+
+.addJobButton:hover {       
+    background-color: rgba(86, 86, 241, 0.788);
 }

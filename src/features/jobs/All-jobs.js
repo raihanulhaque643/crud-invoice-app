@@ -21,6 +21,7 @@ const AllJobs = () => {
                     <div className="jobCol"><button className="jobViewButton">View</button></div>
                 </div>
             ))}
+            <button className="addJobButton" onClick={() => {history.push('/home/create-jobs')}}>+</button>
         </div>
     )
 }
