@@ -15,8 +15,9 @@ const AllJobs = () => {
                     <div className="jobCol"><div>Contact:</div> {job.contactNumber}</div>
                     <div className="jobCol"><div>Model:</div> {job.model}</div>
                     <div className="jobCol"><div>Services:</div> {job.services}</div>
-                    <div className="jobCol"><div>Date:</div> {job.date}</div>
+                    <div className="jobCol"><div>Due:</div> {job.due}</div>
                     <div className="jobCol"><button className="jobEditButton">Edit</button></div>
+                    <div className="jobCol"><button className="jobEditButton">View</button></div>
                 </div>
             ))}
         </div>

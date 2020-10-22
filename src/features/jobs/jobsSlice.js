@@ -1,23 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, nanoid } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
 
 export const counterSlice = createSlice({
   name: 'jobs',
   initialState: {
     value: [
         {
-            jobId: '1',
+            jobId: 'xCG234nd6',
             clientName: 'Raihanul Haque',
             contactNumber: '555 555 555',
             make: 'Toyota',
             model: 'Fielder',
             year: '2005',
-            services: 'Paint job',
+            services: 'Paint job, wheel change, mobil change, howler installation, engine overhaul',
             costing: '50000',
             serviceCharge: '15000',
-            date: '14-08-2020'
+            date: '14-08-2020',
+            due: null
         },
         {
-            jobId: '2',
+            jobId: 'xCG234nd7',
             clientName: 'Hasib Zunair',
             contactNumber: '666 666 666',
             make: 'Toyota',
@@ -26,10 +28,11 @@ export const counterSlice = createSlice({
             services: 'New gear box installation',
             costing: '80000',
             serviceCharge: '18000',
-            date: '1-06-2020'
+            date: '1-06-2020',
+            due: null
         },
         {
-            jobId: '3',
+            jobId: 'xCG234nd8',
             clientName: 'Shadman Ahmed',
             contactNumber: '777 777 777',
             make: 'Suzuki',
@@ -38,7 +41,8 @@ export const counterSlice = createSlice({
             services: 'Clutch repair',
             costing: '2500',
             serviceCharge: '2000',
-            date: '17-08-2020'
+            date: '17-08-2020',
+            due: null
         }
     ],
   },
@@ -50,8 +54,25 @@ export const counterSlice = createSlice({
       // immutable state based off those changes
       state.value += 1;
     },
-    addJob: state => {
-      state.value -= 1;
+    addJob: {
+      reducer(state, action) {
+        state.value.unshift(action.payload);
+      },
+      prepare(clientName,contactNumber,make,model,year,services,costing,serviceCharge) {
+        return {
+          payload: {
+            jobId: uuidv4(),
+            clientName,
+            contactNumber,
+            make,
+            model,
+            year,
+            services,
+            costing,
+            serviceCharge
+          }
+        }
+      }
     },
     editJob: (state, action) => {
       state.value += action.payload;
@@ -69,11 +90,11 @@ export const { getAllJobs, addJob, editJob, deleteJob } = counterSlice.actions;
 // will call the thunk with the `dispatch` function as the first argument. Async
 // code can then be executed and other actions can be dispatched
 
-// export const incrementAsync = amount => dispatch => {
-//   setTimeout(() => {
-//     dispatch(incrementByAmount(amount));
-//   }, 1000);
-// };
+export const addJobAsync = (clientName,contactNumber,make,year,services,costing,serviceCharge) => dispatch => {
+  setTimeout(() => {
+    dispatch(addJob(clientName,contactNumber,make,year,services,costing,serviceCharge));
+  }, 1000);
+};
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
