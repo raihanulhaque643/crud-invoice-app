@@ -21,7 +21,7 @@
     width: 105px;
 }
 
-.jobEditButton, .jobViewButton {
+.jobEditButton, .jobViewButton, .jobDeleteButton {
     border: none;
     outline: none;
     border-radius: 20px;
@@ -29,6 +29,11 @@
     background-color: #000;
     color: white;
     cursor: pointer;
+}
+
+.jobDeleteButton:hover {
+    background-color: red;
+    color: white;
 }
 
 .jobEditButton:hover, .jobViewButton:hover{
