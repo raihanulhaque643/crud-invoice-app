@@ -22,6 +22,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Switch, Route,useHistory, Redirect } from 'react-router-dom';
 import CreateJob from '../features/jobs/Create-job';
 import AllJobs from '../features/jobs/All-jobs';
+import EditJobForm from '../features/jobs/Edit-job';
 
 const drawerWidth = 240;
 
@@ -177,6 +178,7 @@ function ResponsiveDrawer(props) {
             <Route exact path="/home/all-jobs">
               <AllJobs />
             </Route>
+            <Route exact path="/home/edit-job/:jobId" component={EditJobForm} />
             <Route exact path="/home/invoices">
               <h1>Invoices Component goes here...</h1>
             </Route>

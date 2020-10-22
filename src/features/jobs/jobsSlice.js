@@ -77,7 +77,19 @@ export const jobsSlice = createSlice({
       }
     },
     editJob: (state, action) => {
-      state.value += action.payload;
+      const {jobId, clientName, contactNumber, make, model, year, services, costing, serviceCharge, due} = action.payload;
+      const existingPost = state.value.find(job => job.jobId === jobId);
+      if (existingPost) {
+        existingPost.clientName = clientName;
+        existingPost.contactNumber = contactNumber;
+        existingPost.make = make;
+        existingPost.model = model;
+        existingPost.year = year;
+        existingPost.services = services;
+        existingPost.costing = costing;
+        existingPost.serviceCharge = serviceCharge;
+        existingPost.due = due;
+      }
     },
     deleteJob: (state, action) => {
         state.value += action.payload;
@@ -95,6 +107,12 @@ export const { getAllJobs, addJob, editJob, deleteJob } = jobsSlice.actions;
 export const addJobAsync = (jobId,clientName, contactNumber, make, year, services, costing, serviceCharge) => dispatch => {
   setTimeout(() => {
     dispatch(addJob(jobId,clientName,contactNumber,make,year,services,costing, serviceCharge));
+  }, 1000);
+};
+
+export const editJobAsync = (jobId, clientName, contactNumber, make, year, services, costing, serviceCharge) => dispatch => {
+  setTimeout(() => {
+    dispatch(editJob(jobId,clientName,contactNumber,make,year,services,costing, serviceCharge));
   }, 1000);
 };
 
