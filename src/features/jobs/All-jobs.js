@@ -5,7 +5,6 @@ import './allJobStyles.css';
 
 const AllJobs = () => {
   const jobs = useSelector(selectJobs);
-  const dispatch = useDispatch();
     return (
         <div className="jobContainerParent">
             {jobs.map((job) => (
@@ -17,7 +16,7 @@ const AllJobs = () => {
                     <div className="jobCol"><div>Services:</div> {job.services}</div>
                     <div className="jobCol"><div>Due:</div> {job.due}</div>
                     <div className="jobCol"><button className="jobEditButton">Edit</button></div>
-                    <div className="jobCol"><button className="jobEditButton">View</button></div>
+                    <div className="jobCol"><button className="jobViewButton">View</button></div>
                 </div>
             ))}
         </div>

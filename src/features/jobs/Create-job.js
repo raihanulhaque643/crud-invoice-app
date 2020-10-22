@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addJobAsync } from './jobsSlice';
+import { addJobAsync } from './jobsSlice.js';
 import { BrowserRouter as Router, Switch, Route,useHistory, Redirect } from 'react-router-dom';
 import './createJobStyles.css';
 
 const CreateJob = () => {
+    const [jobId, setJobId] = useState('');
     const [clientName, setClientName] = useState('');
     const [contactNumber, setContactNumber] = useState('');
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
     const [year, setYear] = useState('');
     const [services, setServices] = useState('');
-    const [costing, setCosting] = useState('');
-    const [serviceCharge, setServiceCharge] = useState('');
+    const [costing, setCosting] = useState(0);
+    const [serviceCharge, setServiceCharge] = useState(0);
 
     const dispatch = useDispatch();
-
-    const jobs = useSelector(state => state.jobs);
 
     const history = useHistory();
 
@@ -30,8 +29,8 @@ const CreateJob = () => {
     const onServiceChargeChanged = e => setServiceCharge(e.target.value);
 
     const onCreateJobClicked = (e) => {
+        console.log(serviceCharge);
         e.preventDefault();
-        const due = Number(costing) + Number(serviceCharge);
         if (clientName && contactNumber && make && model && year && services && costing && serviceCharge) {
             dispatch(addJobAsync(clientName,contactNumber,make,model,year,services,costing,serviceCharge));
             setClientName('');
@@ -43,6 +42,7 @@ const CreateJob = () => {
             setCosting('');
             setServiceCharge('');
             history.push('/home/all-jobs');
+            document.documentElement.scrollTop = 0;
           }
     }
 

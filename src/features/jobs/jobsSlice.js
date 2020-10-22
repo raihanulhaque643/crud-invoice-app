@@ -1,7 +1,7 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 
-export const counterSlice = createSlice({
+export const jobsSlice = createSlice({
   name: 'jobs',
   initialState: {
     value: [
@@ -16,7 +16,7 @@ export const counterSlice = createSlice({
             costing: '50000',
             serviceCharge: '15000',
             date: '14-08-2020',
-            due: null
+            due: '65000'
         },
         {
             jobId: 'xCG234nd7',
@@ -29,7 +29,7 @@ export const counterSlice = createSlice({
             costing: '80000',
             serviceCharge: '18000',
             date: '1-06-2020',
-            due: null
+            due: '98000'
         },
         {
             jobId: 'xCG234nd8',
@@ -42,7 +42,7 @@ export const counterSlice = createSlice({
             costing: '2500',
             serviceCharge: '2000',
             date: '17-08-2020',
-            due: null
+            due: '4500'
         }
     ],
   },
@@ -59,6 +59,7 @@ export const counterSlice = createSlice({
         state.value.unshift(action.payload);
       },
       prepare(clientName,contactNumber,make,model,year,services,costing,serviceCharge) {
+        const dueAmount = Number(costing) + Number(serviceCharge);
         return {
           payload: {
             jobId: uuidv4(),
@@ -69,7 +70,8 @@ export const counterSlice = createSlice({
             year,
             services,
             costing,
-            serviceCharge
+            serviceCharge,
+            due: `${dueAmount}`
           }
         }
       }
@@ -83,16 +85,16 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { getAllJobs, addJob, editJob, deleteJob } = counterSlice.actions;
+export const { getAllJobs, addJob, editJob, deleteJob } = jobsSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
 // will call the thunk with the `dispatch` function as the first argument. Async
 // code can then be executed and other actions can be dispatched
 
-export const addJobAsync = (clientName,contactNumber,make,year,services,costing,serviceCharge) => dispatch => {
+export const addJobAsync = (jobId,clientName, contactNumber, make, year, services, costing, serviceCharge) => dispatch => {
   setTimeout(() => {
-    dispatch(addJob(clientName,contactNumber,make,year,services,costing,serviceCharge));
+    dispatch(addJob(jobId,clientName,contactNumber,make,year,services,costing, serviceCharge));
   }, 1000);
 };
 
@@ -101,4 +103,4 @@ export const addJobAsync = (clientName,contactNumber,make,year,services,costing,
 // in the slice file. For example: `useSelector((state) => state.counter.value)`
 export const selectJobs = state => state.jobs.value;
 
-export default counterSlice.reducer;
+export default jobsSlice.reducer;
