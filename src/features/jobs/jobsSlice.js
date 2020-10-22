@@ -15,7 +15,8 @@ export const jobsSlice = createSlice({
             services: 'Paint job, wheel change, mobil change, howler installation, engine overhaul',
             costing: '50000',
             serviceCharge: '15000',
-            date: '14-08-2020',
+            dateCreated: '2018-8-3',
+            timeCreated: '11:12:40 am',
             due: '65000'
         },
         {
@@ -28,7 +29,8 @@ export const jobsSlice = createSlice({
             services: 'New gear box installation',
             costing: '80000',
             serviceCharge: '18000',
-            date: '1-06-2020',
+            dateCreated: '2018-3-3',
+            timeCreated: '5:22:30 pm',
             due: '98000'
         },
         {
@@ -41,7 +43,8 @@ export const jobsSlice = createSlice({
             services: 'Clutch repair',
             costing: '2500',
             serviceCharge: '2000',
-            date: '17-08-2020',
+            dateCreated: '17-08-2020',
+            timeCreated: '6:42:30 pm',
             due: '4500'
         }
     ],
@@ -60,6 +63,21 @@ export const jobsSlice = createSlice({
       },
       prepare(clientName,contactNumber,make,model,year,services,costing,serviceCharge) {
         const dueAmount = Number(costing) + Number(serviceCharge);
+
+        let today = new Date();
+        let dateCreated = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        const formatAMPM = (date) => {
+          let hours = date.getHours();
+          let minutes = date.getMinutes();
+          var ampm = hours >= 12 ? 'pm' : 'am';
+          hours = hours % 12;
+          hours = hours ? hours : 12; // the hour '0' should be '12'
+          minutes = minutes < 10 ? '0'+minutes : minutes;
+          let strTime = hours + ':' + minutes + ' ' + ampm;
+          return strTime;
+        }
+        let timeCreated = formatAMPM(new Date);
+        
         return {
           payload: {
             jobId: uuidv4(),
@@ -71,7 +89,9 @@ export const jobsSlice = createSlice({
             services,
             costing,
             serviceCharge,
-            due: `${dueAmount}`
+            due: `${dueAmount}`,
+            dateCreated,
+            timeCreated
           }
         }
       }

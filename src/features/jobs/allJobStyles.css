@@ -38,13 +38,13 @@
 
 .addJobButton {
     background-color: rgba(86, 86, 241, 0.986);
+    color: white;
     height: 60px;
     width: 60px;
     border-radius: 10%;
     position: fixed;
     bottom: 40px;
     right: 40px;
-    color: white;
     cursor: pointer;
     font-size: 30px;
     outline: none;
@@ -52,5 +52,6 @@
 }
 
 .addJobButton:hover {       
-    background-color: rgba(86, 86, 241, 0.788);
+    color: rgba(86, 86, 241, 0.788);
+    background-color: white;
 }

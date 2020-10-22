@@ -17,6 +17,7 @@ const AllJobs = () => {
                     <div className="jobCol"><div>Model:</div> {job.model}</div>
                     <div className="jobCol"><div>Services:</div> {job.services}</div>
                     <div className="jobCol"><div>Due:</div> {job.due}</div>
+                    <div className="jobCol"><div>Billed on:</div> {job.dateCreated} {job.timeCreated}</div>
                     <div className="jobCol"><button className="jobEditButton" onClick={() => {history.push(`/home/edit-job/${job.jobId}`)}}>Edit</button></div>
                     <div className="jobCol"><button className="jobViewButton">View</button></div>
                 </div>

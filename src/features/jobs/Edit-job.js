@@ -44,7 +44,7 @@ const EditJobForm = ({ match }) => {
   return (
     <div className="jobContainer">
         <div className="createJobForm">
-            <h2>Enter new job:</h2>
+            <h2>Update job:</h2>
             <form>
                     <label htmlFor="clientName">Client name:</label>
                     <input 
