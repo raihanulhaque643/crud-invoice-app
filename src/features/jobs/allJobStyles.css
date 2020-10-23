@@ -45,8 +45,8 @@
 }
 
 .addJobButton {
-    background-color: rgba(86, 86, 241, 0.986);
-    color: white;
+    background-color:rgba(238, 238, 238, 0.733);
+    color: #000;
     height: 60px;
     width: 60px;
     border-radius: 10%;
@@ -59,9 +59,8 @@
     border: none;
 }
 
-.addJobButton:hover {       
-    color: rgba(86, 86, 241, 0.788);
-    background-color: white;
+.addJobButton:hover {
+    background-color: #eee;
 }
 
 .duesUncleared {
