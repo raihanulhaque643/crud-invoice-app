@@ -19,7 +19,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
-import { BrowserRouter as Router, Switch, Route,useHistory, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route,useHistory, Redirect, Link } from 'react-router-dom';
 import CreateJob from '../features/jobs/Create-job';
 import AllJobs from '../features/jobs/All-jobs';
 import EditJobForm from '../features/jobs/Edit-job';
@@ -77,19 +77,13 @@ function ResponsiveDrawer(props) {
   function pushFirstBlockRoute (index) {
     switch(index){
       case 0:
-        history.push('/home/dashboard');
-        break;
-      case 1:
-        history.push('/home/create-jobs');
-        break;
-      case 2:
         history.push('/home/all-jobs');
         break;
-      case 3:
+      case 1:
         history.push('/home/invoices');
         break;
       default:
-        history.push('/home/dashboard');
+        history.push('/home/all-jobs');
     }
   };
 
@@ -98,13 +92,11 @@ function ResponsiveDrawer(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {['Dashboard', 'Create Job', 'All Jobs', 'Invoices'].map((text, index) => (
+        {['All Jobs', 'Invoices'].map((text, index) => (
           <ListItem button key={text} onClick={() => pushFirstBlockRoute(index)}>
             <ListItemIcon>
-            {index === 0 && <DashboardIcon /> }
-            {index === 1 && <AddJobIcon />}
-            {index === 2 && <AllJobsIcon />}
-            {index === 3 && <InvoiceIcon />}
+            {index === 0 && <AllJobsIcon /> }
+            {index === 1 && <InvoiceIcon />}
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -130,7 +122,7 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Car Garage
+            <div onClick={()=>{history.push('/home/all-jobs')}} style={{cursor: 'pointer'}}>Car Garage</div>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -169,10 +161,7 @@ function ResponsiveDrawer(props) {
         <div className={classes.toolbar} />
         <Switch>
             <Route exact path="/home">
-             <Redirect to="/home/dashboard" />
-            </Route>
-            <Route exact path="/home/dashboard">
-              <h1>Dashbord component</h1>
+             <Redirect to="/home/all-jobs" />
             </Route>
             <Route exact path="/home/create-jobs">
               <CreateJob />
