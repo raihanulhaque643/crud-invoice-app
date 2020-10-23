@@ -32,7 +32,7 @@
 }
 
 .jobDeleteButton:hover {
-    background-color: red;
+    background-color: rgb(204, 0, 0);
     color: white;
 }
 
@@ -59,4 +59,13 @@
 .addJobButton:hover {       
     color: rgba(86, 86, 241, 0.788);
     background-color: white;
+}
+
+.duesUncleared {
+    background-color: red;
+    color: white;
+    font: large;
+    padding: 4px;
+    border-radius: 5px;
+
 }
