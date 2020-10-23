@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route,useHistory, Redirect } from 'react-router-dom';
 import { selectJobs } from './jobsSlice.js';
 import './allJobStyles.css';
+import NumberFormat from 'react-number-format';
 
 const AllJobs = () => {
   const jobs = useSelector(selectJobs);
@@ -16,7 +17,16 @@ const AllJobs = () => {
                     <div className="jobCol"><div>Contact:</div> {job.contactNumber}</div>
                     <div className="jobCol"><div>Model:</div> {job.model}</div>
                     {/* <div className="jobCol"><div>Services:</div> {job.services}</div> */}
-                    <div className="jobCol"><div>Due:</div><div className={`${job.due !== '0' ? "duesUncleared" : ""}`}>{job.due}</div></div>
+                    <div className="jobCol"><div>Due:</div>
+                        <div className={`${job.due !== '0' ? "duesUncleared" : ""}`}>
+                            <NumberFormat 
+                            value={`${job.due}`} 
+                            displayType={'text'} 
+                            thousandSeparator={true} 
+                            thousandsGroupStyle="lakh" 
+                            prefix={'Tk. '} />
+                        </div>
+                    </div>
                     <div className="jobCol"><div>Billed on:</div> {job.dateCreated} {job.timeCreated}</div>
                     <div className="jobCol"><button className="jobViewButton">View</button></div>
                     <div className="jobCol"><button className="jobEditButton" onClick={() => {history.push(`/home/edit-job/${job.jobId}`)}}>Edit</button></div>
