@@ -6,12 +6,14 @@
 
 .jobRow{
     display: flex;
-    background-color: rgba(169, 169, 169, 0.356);
+    /* background-color: rgba(169, 169, 169, 0.356); */
     padding: 20px;
     margin: 20px;
     margin-top: 0px;
     color: white;
     border-radius: 20px;
+    background: rgb(0,0,0);
+    background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(98,98,98,0.6496519721577726) 50%, rgba(1,1,1,1) 100%);
 }
 
 .jobCol {
@@ -32,7 +34,7 @@
 }
 
 .jobDeleteButton:hover {
-    background-color: rgb(204, 0, 0);
+    background-color: red;
     color: white;
 }
 
@@ -62,7 +64,7 @@
 }
 
 .duesUncleared {
-    background-color: red;
+    background-color: rgb(204, 0, 0);
     color: white;
     font: large;
     padding: 4px;

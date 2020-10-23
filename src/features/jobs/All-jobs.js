@@ -4,10 +4,12 @@ import { BrowserRouter as Router, Switch, Route,useHistory, Redirect } from 'rea
 import { selectJobs } from './jobsSlice.js';
 import './allJobStyles.css';
 import NumberFormat from 'react-number-format';
+import { deleteJobAsync } from './jobsSlice.js';
 
 const AllJobs = () => {
   const jobs = useSelector(selectJobs);
   const history = useHistory();
+  const dispatch = useDispatch();
     return (
         <div className="jobContainerParent">
             {jobs.map((job) => (
@@ -28,9 +30,15 @@ const AllJobs = () => {
                         </div>
                     </div>
                     <div className="jobCol"><div>Billed on:</div> {job.dateCreated} {job.timeCreated}</div>
-                    <div className="jobCol"><button className="jobViewButton">View</button></div>
-                    <div className="jobCol"><button className="jobEditButton" onClick={() => {history.push(`/home/edit-job/${job.jobId}`)}}>Edit</button></div>
-                    <div className="jobCol"><button className="jobDeleteButton">Delete</button></div>
+                    <div className="jobCol">
+                    <button className="jobViewButton">View</button>
+                    </div>
+                    <div className="jobCol">
+                    <button className="jobEditButton" onClick={() => {history.push(`/home/edit-job/${job.jobId}`)}}>Edit</button>
+                    </div>
+                    <div className="jobCol">
+                    <button className="jobDeleteButton" onClick={() => {dispatch(deleteJobAsync(`${job.jobId}`))}}>Delete</button>
+                    </div>
                 </div>
             ))}
             <button className="addJobButton" onClick={() => {history.push('/home/create-jobs')}}>+</button>

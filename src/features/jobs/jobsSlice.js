@@ -15,7 +15,7 @@ export const jobsSlice = createSlice({
             services: 'Paint job, wheel change, mobil change, howler installation, engine overhaul',
             costing: '50000',
             serviceCharge: '15000',
-            dateCreated: '2018-8-3',
+            dateCreated: '3-8-2018',
             timeCreated: '11:12:40 am',
             due: '65000'
         },
@@ -29,7 +29,7 @@ export const jobsSlice = createSlice({
             services: 'New gear box installation',
             costing: '80000',
             serviceCharge: '18000',
-            dateCreated: '2018-3-3',
+            dateCreated: '20-3-2019',
             timeCreated: '5:22:30 pm',
             due: '98000'
         },
@@ -43,7 +43,7 @@ export const jobsSlice = createSlice({
             services: 'Clutch repair',
             costing: '2500',
             serviceCharge: '2000',
-            dateCreated: '17-08-2020',
+            dateCreated: '14-6-2020',
             timeCreated: '6:42:30 pm',
             due: '4500'
         }
@@ -65,7 +65,8 @@ export const jobsSlice = createSlice({
         const dueAmount = Number(costing) + Number(serviceCharge);
 
         let today = new Date();
-        let dateCreated = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        // let dateCreated = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        let dateCreated = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
         const formatAMPM = (date) => {
           let hours = date.getHours();
           let minutes = date.getMinutes();
@@ -112,7 +113,8 @@ export const jobsSlice = createSlice({
       }
     },
     deleteJob: (state, action) => {
-        state.value += action.payload;
+      const {jobId} = action.payload;
+      state.value = state.value.filter(job => job.jobId !== jobId);
     },
   },
 });
@@ -133,6 +135,13 @@ export const addJobAsync = (jobId,clientName, contactNumber, make, year, service
 export const editJobAsync = (jobId, clientName, contactNumber, make, year, services, costing, serviceCharge) => dispatch => {
   setTimeout(() => {
     dispatch(editJob(jobId,clientName,contactNumber,make,year,services,costing, serviceCharge));
+  }, 1000);
+};
+
+export const deleteJobAsync = jobId => dispatch => {
+  console.log(jobId);
+  setTimeout(() => {
+    dispatch(deleteJob({jobId}));
   }, 1000);
 };
 
