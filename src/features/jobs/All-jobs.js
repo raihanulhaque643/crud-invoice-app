@@ -31,7 +31,7 @@ const AllJobs = () => {
                     </div>
                     <div className="jobCol"><div>Billed on:</div> {job.dateCreated} {job.timeCreated}</div>
                     <div className="jobCol">
-                    <button className="jobViewButton">View</button>
+                    <button className="jobViewButton" onClick={() => {history.push(`/home/invoices/${job.jobId}`)}}>View</button>
                     </div>
                     <div className="jobCol">
                     <button className="jobEditButton" onClick={() => {history.push(`/home/edit-job/${job.jobId}`)}}>Edit</button>

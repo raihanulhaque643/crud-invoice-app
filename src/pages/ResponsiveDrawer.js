@@ -23,6 +23,7 @@ import { BrowserRouter as Router, Switch, Route,useHistory, Redirect, Link } fro
 import CreateJob from '../features/jobs/Create-job';
 import AllJobs from '../features/jobs/All-jobs';
 import EditJobForm from '../features/jobs/Edit-job';
+import Pdf from '../features/pdf/Pdf.js';
 
 const drawerWidth = 240;
 
@@ -170,9 +171,7 @@ function ResponsiveDrawer(props) {
               <AllJobs />
             </Route>
             <Route exact path="/home/edit-job/:jobId" component={EditJobForm} />
-            <Route exact path="/home/invoices">
-              <h1>Invoices Component goes here...</h1>
-            </Route>
+            <Route exact path="/home/invoices/:jobId" component={Pdf} />
             <Route  path="">
               <h1>Eror 404! Component not found...</h1>
             </Route>
