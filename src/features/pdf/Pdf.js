@@ -1,13 +1,15 @@
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet, PDFViewer } from '@react-pdf/renderer';
 import { useSelector } from 'react-redux';
+import NumberFormat from 'react-number-format';
 
 // Create styles
 const styles = StyleSheet.create({
   page: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#E4E4E4'
+    backgroundColor: '#fafafa',
+    height: '100%'
   },
   section: {
     margin: 10,
@@ -18,7 +20,8 @@ const styles = StyleSheet.create({
   flexContainer: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    width: 'auto'
   },
   invoice: {
     float: 'right',
@@ -29,18 +32,24 @@ const styles = StyleSheet.create({
   headerStack: {
     display: 'flex',
     flexDirection:'column',
-    color: 'grey'
+    color: '#000'
   },
   alignRight: {
     textAlign: 'right'
   },
-  column: {
-  
+  col: {
+    width: '100%',
+    padding: '5px',
   },
   row: {
   display: 'flex',
-  border: '1px solid grey',
-  margin: '20px'
+  border: '0.5px',
+  margin: '20px',
+  padding: '5px',
+  width: '100%'
+  },
+  bold: {
+    fontWeight: 'bold'
   }
 });
 
@@ -70,63 +79,60 @@ const Pdf = ({match}) => {
       </div>
       </View>
       <View style={styles.section}>
-        <div style={styles.row}>
-          <div style={styles.col}>
-          Client Name:
+        <div style={styles.col}>
+        <div style={{...styles.col, ...styles.bold}}>
+          Invoice number:
           </div>
           <div style={styles.col}>
+          {job.jobId}
+          </div>
+          <div style={{...styles.col, ...styles.bold}}>
+          Customer:
+          </div>
+          <div style={styles.col}>
+          {' '}
           {job.clientName}
-          </div>
-        </div>
-        <div style={styles.row}>
-          <div style={styles.col}>
-          Contact number:
-          </div>
-          <div style={styles.col}>
-          {job.contactNumber}
-          </div>
-        </div>
-        <div style={styles.row}>
-          <div style={styles.col}>
-          Vehicle:
-          </div>
-          <div style={styles.col}>
-          {job.make}{' '}
-          {job.model}{' '}
+          {', '}
+          {job.make}
+          {' '}
+          {job.model}
+          {', '}
           {job.year}
+          {' '}
           </div>
-        </div>
-        <div style={styles.row}>
-          <div style={styles.col}>
+          <div style={{...styles.col, ...styles.bold}}>
           Services:
           </div>
           <div style={styles.col}>
           {job.services}
           </div>
-        </div>
-        <div style={styles.row}>
-          <div style={styles.col}>
-          Costing:
-          </div>
-          <div style={styles.col}>
-          {job.costing}
-          </div>
-        </div>
-        <div style={styles.row}>
-          <div style={styles.col}>
-          Service charge:
-          </div>
-          <div style={styles.col}>
-          {job.serviceCharge}
-          </div>
-        </div>
-        <div style={styles.row}>
-          <div style={styles.col}>
-          Due amount:
-          </div>
-          <div style={styles.col}>
-          {job.due}
-          </div>
+          {/* <div style={styles.row}>
+            {'  '}
+          </div> */}
+            <div style={styles.col}>
+                <span style={styles.bold}>Costing:</span><br />
+                <NumberFormat 
+                  value={`${job.costing}`} 
+                  displayType={'text'} 
+                  thousandSeparator={true} 
+                  thousandsGroupStyle="lakh" />
+            </div>
+            <div style={styles.col}>
+              <span style={styles.bold}>Service charge:</span><br />
+              <NumberFormat 
+                  value={`${job.serviceCharge}`} 
+                  displayType={'text'} 
+                  thousandSeparator={true} 
+                  thousandsGroupStyle="lakh" />
+            </div>
+            <div style={styles.col}>
+              <span style={styles.bold}>Due:</span><br />
+              <NumberFormat 
+                  value={`${job.due}`} 
+                  displayType={'text'} 
+                  thousandSeparator={true} 
+                  thousandsGroupStyle="lakh" />
+            </div>
         </div>
       </View>
     </Page>
