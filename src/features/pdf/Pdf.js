@@ -9,11 +9,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: '#fafafa',
-    height: '100%'
+    height: ''
   },
   section: {
-    margin: 10,
-    padding: '0px 50px',
+    margin: '0px 5px',
+    padding: '10px 50px',
     flexGrow: 1,
     width: '100%',
   },
@@ -86,6 +86,7 @@ const Pdf = ({match}) => {
           <div style={styles.col}>
           {job.jobId}
           </div>
+          <hr/>
           <div style={{...styles.col, ...styles.bold}}>
           Customer:
           </div>
@@ -100,22 +101,23 @@ const Pdf = ({match}) => {
           {job.year}
           {' '}
           </div>
+          <hr/>
           <div style={{...styles.col, ...styles.bold}}>
           Services:
           </div>
           <div style={styles.col}>
           {job.services}
           </div>
-          {/* <div style={styles.row}>
-            {'  '}
-          </div> */}
+          <hr />
             <div style={styles.col}>
                 <span style={styles.bold}>Costing:</span><br />
                 <NumberFormat 
                   value={`${job.costing}`} 
                   displayType={'text'} 
                   thousandSeparator={true} 
-                  thousandsGroupStyle="lakh" />
+                  thousandsGroupStyle="lakh" 
+                  prefix="Tk. "
+                  />
             </div>
             <div style={styles.col}>
               <span style={styles.bold}>Service charge:</span><br />
@@ -123,15 +125,20 @@ const Pdf = ({match}) => {
                   value={`${job.serviceCharge}`} 
                   displayType={'text'} 
                   thousandSeparator={true} 
-                  thousandsGroupStyle="lakh" />
+                  thousandsGroupStyle="lakh" 
+                  prefix="Tk. "
+                  />
             </div>
+            <hr />
             <div style={styles.col}>
               <span style={styles.bold}>Due:</span><br />
               <NumberFormat 
                   value={`${job.due}`} 
                   displayType={'text'} 
                   thousandSeparator={true} 
-                  thousandsGroupStyle="lakh" />
+                  thousandsGroupStyle="lakh" 
+                  prefix="Tk. "
+                  />
             </div>
         </div>
       </View>
