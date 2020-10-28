@@ -20,6 +20,8 @@ const EditJobForm = ({ match }) => {
   const [costing, setCosting] = useState(job.costing);
   const [serviceCharge, setServiceCharge] = useState(job.serviceCharge);
   const [due, setDue] = useState(job.due);
+  const [errorMessage, setErrorMessage] = useState('');
+
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -34,17 +36,22 @@ const EditJobForm = ({ match }) => {
   const onServiceChargeChanged = e => setServiceCharge(e.target.value);
   const onDueChanged = e => setDue(e.target.value);
 
-  const onUpdateJobClicked = () => {
+  const onUpdateJobClicked = (e) => {
+    e.preventDefault();
     if (clientName && contactNumber && make && model && year && services && costing && serviceCharge && due) {
       dispatch(editJobAsync({ jobId: jobId, clientName, contactNumber, make, model, year, services, costing, serviceCharge, due}))
       history.push('/home/all-jobs')
-    }
+    } else {
+      window.scrollTo(0, 0);
+      setErrorMessage('** All fields are required! **');
+  }
   }
 
   return (
     <div className="jobContainer">
         <div className="createJobForm">
             <h2>Update job:</h2>
+            <h4 style={{color: 'red'}}>{errorMessage? errorMessage : ''}</h4>
             <form>
                     <label htmlFor="clientName">Client name:</label>
                     <input 
@@ -57,7 +64,7 @@ const EditJobForm = ({ match }) => {
                     placeholder="Contact number"
                     value={contactNumber}
                     onChange={onContactNumberChanged}
-                    type="text"/>
+                    type="number"/>
                     <label htmlFor="make">Vehicle:</label>
                     <input 
                     placeholder="Make"

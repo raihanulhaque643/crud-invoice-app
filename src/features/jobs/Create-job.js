@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addJobAsync } from './jobsSlice.js';
 import { BrowserRouter as Router, Switch, Route,useHistory, Redirect } from 'react-router-dom';
 import './createJobStyles.css';
+import NumberFormat from 'react-number-format';
+
 
 const CreateJob = () => {
     const [jobId, setJobId] = useState('');
@@ -14,6 +16,7 @@ const CreateJob = () => {
     const [services, setServices] = useState('');
     const [costing, setCosting] = useState(0);
     const [serviceCharge, setServiceCharge] = useState(0);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const dispatch = useDispatch();
 
@@ -43,13 +46,17 @@ const CreateJob = () => {
             setServiceCharge('');
             history.push('/home/all-jobs');
             document.documentElement.scrollTop = 0;
-          }
+        } else {
+            window.scrollTo(0, 0);
+            setErrorMessage('** All fields are required! **');
+        }
     }
 
     return (
         <div className="jobContainer">
             <div className="createJobForm">
                 <h2>Enter new job:</h2>
+                <h4 style={{color: 'red'}}>{errorMessage? errorMessage : ''}</h4>
                 <form>
                         <label htmlFor="clientName">Client name:</label>
                         <input 
@@ -62,7 +69,7 @@ const CreateJob = () => {
                         placeholder="Contact number"
                         value={contactNumber}
                         onChange={onContactNumberChanged}
-                        type="text"/>
+                        type="number"/>
                         <label htmlFor="make">Vehicle:</label>
                         <input 
                         placeholder="Make"
@@ -80,7 +87,7 @@ const CreateJob = () => {
                         placeholder="Year"
                         value={year}
                         onChange={onYearChanged}
-                        type="text"/>
+                        type="number"/>
                         <label htmlFor="services">Services:</label>
                         <textarea 
                         placeholder="Details of services requested"
@@ -92,7 +99,7 @@ const CreateJob = () => {
                         placeholder="Costing"
                         value={costing}
                         onChange={onCostingChanged}
-                        type="number"/>
+                        type="number"></input>
                         <label htmlFor="serviceCharge">Service Charge:</label>
                         <input 
                         placeholder="Service charge"

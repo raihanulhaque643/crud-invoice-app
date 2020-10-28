@@ -103,12 +103,20 @@ const Pdf = ({match}) => {
           </div>
           <hr/>
           <div style={{...styles.col, ...styles.bold}}>
+          Contact number:
+          </div>
+          <div style={styles.col}>
+          {' '}
+          {job.contactNumber}
+          </div>
+          <hr/>
+          <div style={{...styles.col, ...styles.bold}}>
           Services:
           </div>
           <div style={styles.col}>
           {job.services}
           </div>
-          <hr />
+          <hr/>
             <div style={styles.col}>
                 <span style={styles.bold}>Costing:</span><br />
                 <NumberFormat 
@@ -129,7 +137,7 @@ const Pdf = ({match}) => {
                   prefix="Tk. "
                   />
             </div>
-            <hr />
+            <hr/>
             <div style={styles.col}>
               <span style={styles.bold}>Due:</span><br />
               <NumberFormat 
