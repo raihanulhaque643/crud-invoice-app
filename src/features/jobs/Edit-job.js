@@ -39,6 +39,7 @@ const EditJobForm = ({ match }) => {
   const onUpdateJobClicked = (e) => {
     e.preventDefault();
     if (clientName && contactNumber && make && model && year && services && costing && serviceCharge && due) {
+      setErrorMessage('');
       dispatch(editJobAsync({ jobId: jobId, clientName, contactNumber, make, model, year, services, costing, serviceCharge, due}))
       history.push('/home/all-jobs')
     } else {

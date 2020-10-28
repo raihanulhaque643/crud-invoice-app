@@ -35,6 +35,7 @@ const CreateJob = () => {
         console.log(serviceCharge);
         e.preventDefault();
         if (clientName && contactNumber && make && model && year && services && costing && serviceCharge) {
+            setErrorMessage('');
             dispatch(addJobAsync(clientName,contactNumber,make,model,year,services,costing,serviceCharge));
             setClientName('');
             setContactNumber('');

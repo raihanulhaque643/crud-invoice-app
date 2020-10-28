@@ -14,3 +14,16 @@ const firebaseConfig = {
   
 
 firebase.initializeApp(firebaseConfig);
+
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
+
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    localStorage.setItem("currentUser", user.email);  
+  } else {
+    localStorage.setItem("currentUser", '');
+  }
+});
+
+export default firebase;

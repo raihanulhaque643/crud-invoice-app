@@ -15,9 +15,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import AddJobIcon from '@material-ui/icons/Add';
 import AllJobsIcon from '@material-ui/icons/List';
 import MenuIcon from '@material-ui/icons/Menu';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+
+import { auth } from "../firebase/firebase";
 
 import { BrowserRouter as Router, Switch, Route,useHistory, Redirect, Link } from 'react-router-dom';
 import CreateJob from '../features/jobs/Create-job';
@@ -61,6 +64,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     // padding: theme.spacing(3),
   },
+  titleanduser: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  }
 }));
 
 function ResponsiveDrawer(props) {
@@ -68,6 +77,7 @@ function ResponsiveDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const user = localStorage.getItem('currentUser');
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -83,6 +93,15 @@ function ResponsiveDrawer(props) {
       case 1:
         history.push('/home/invoices');
         break;
+      case 2:
+        auth.signOut().then(function() {
+          // Sign-out successful.
+          localStorage.setItem("currentUser", '');
+          history.push('/');
+        }).catch(function(error) {
+          // An error happened.
+        });
+        break;
       default:
         history.push('/home/all-jobs');
     }
@@ -93,11 +112,12 @@ function ResponsiveDrawer(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {['All Jobs', 'Invoices'].map((text, index) => (
+        {['All Jobs', 'Invoices', 'Logout'].map((text, index) => (
           <ListItem button key={text} onClick={() => pushFirstBlockRoute(index)}>
             <ListItemIcon>
             {index === 0 && <AllJobsIcon /> }
             {index === 1 && <InvoiceIcon />}
+            {index === 2 && <ExitToAppIcon />}
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -122,9 +142,12 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            <div onClick={()=>{history.push('/home/all-jobs')}} style={{cursor: 'pointer'}}>Car Garage</div>
-          </Typography>
+          <div className={classes.titleanduser}>
+            <Typography variant="h6" noWrap>
+              <div onClick={()=>{history.push('/home/all-jobs')}} style={{cursor: 'pointer'}}>Car Garage</div>
+            </Typography>
+            <div>{user}</div>
+          </div>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -161,19 +184,27 @@ function ResponsiveDrawer(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Switch>
+            {user && 
             <Route exact path="/home">
              <Redirect to="/home/all-jobs" />
             </Route>
+            }
+            {user &&
             <Route exact path="/home/create-jobs">
-              <CreateJob />
+              {user && <CreateJob />}
             </Route>
+            }
+            {user &&
             <Route exact path="/home/all-jobs">
-              <AllJobs />
+               <AllJobs />
             </Route>
-            <Route exact path="/home/edit-job/:jobId" component={EditJobForm} />
-            <Route exact path="/home/invoices/:jobId" component={Pdf} />
+            }
+            {user && <Route  exact path="/home/edit-job/:jobId" component={EditJobForm} />}
+            {user && <Route exact path="/home/invoices/:jobId" component={Pdf} />}
             <Route  path="">
-              <h1>Eror 404! Component not found...</h1>
+            {!user &&
+            <Redirect to="/" />
+            }
             </Route>
           </Switch>
       </main>
