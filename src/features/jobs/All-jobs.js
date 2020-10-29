@@ -6,10 +6,34 @@ import './allJobStyles.css';
 import NumberFormat from 'react-number-format';
 import { deleteJobAsync } from './jobsSlice.js';
 
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 const AllJobs = () => {
   const jobs = useSelector(selectJobs);
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const [open, setOpen] = React.useState(false);
+  const [dialogId, setDialogId] = React.useState('');
+  const [dialogClient, setDialogClient] = React.useState('');
+
+  const handleClickOpen = (job) => {
+    setOpen(true);
+    setDialogId(job.jobId);
+    setDialogClient(job.clientName);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setDialogId('');
+    setDialogClient('');
+  };
+
     return (
         <div className="jobContainerParent">
             {jobs.map((job) => (
@@ -37,10 +61,36 @@ const AllJobs = () => {
                     <button className="jobEditButton" onClick={() => {history.push(`/home/edit-job/${job.jobId}`)}}>Edit</button>
                     </div>
                     <div className="jobCol">
-                    <button className="jobDeleteButton" onClick={() => {dispatch(deleteJobAsync(`${job.jobId}`))}}>Delete</button>
+                    <button className="jobDeleteButton" onClick={() => handleClickOpen(job)}>Delete</button>
                     </div>
                 </div>
-            ))}
+            ))};
+            
+            {/* Confirm delete modal/dialog: */}
+            <Dialog
+                key={dialogId}
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                >
+                {/* <DialogTitle id="alert-dialog-title">{`${dialogId}`}</DialogTitle> */}
+                <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    Are you sure you want to delete invoice of <span style={{fontWeight: 'bold'}}>{dialogClient}</span>?<br/>
+                    <small>This action can't be undone.</small>
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleClose} color="default">
+                    Cancel
+                </Button>
+                <Button onClick={() => {dispatch(deleteJobAsync(dialogId));setOpen(false)}} variant="contained" color="secondary" autoFocus>
+                    Confirm
+                </Button>
+                </DialogActions>
+                </Dialog>
+
             <button className="addJobButton" onClick={() => {history.push('/home/create-jobs')}}>+</button>
         </div>
     )
