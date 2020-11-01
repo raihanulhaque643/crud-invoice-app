@@ -58,7 +58,7 @@ const Pdf = ({match}) => {
     const { jobId } = match.params;
 
     const job = useSelector(state =>
-      state.jobs.value.find(job => job.jobId === jobId)
+      state.jobs.jobs.find(job => job.jobId === jobId)
     );
     return(
   <Document>

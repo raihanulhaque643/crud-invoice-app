@@ -1,4 +1,4 @@
-import * as firebase from "firebase/app";
+import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
@@ -25,5 +25,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     localStorage.setItem("currentUser", '');
   }
 });
+
+export const db = firebase.firestore();
 
 export default firebase;

@@ -1,54 +1,27 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
+import { db } from '../../firebase/firebase';
+
+export const getJobsAsync = createAsyncThunk('jobs/fetchJobs', async () => {
+  const response = [];
+  await db.collection("jobs").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+        response.push(doc.data())
+    });
+  });
+  console.log(response)
+  return response
+})
+
+const initialState = {
+  jobs: [],
+  status: 'idle',
+  error: null
+}
 
 export const jobsSlice = createSlice({
   name: 'jobs',
-  initialState: {
-    value: [
-        {
-            jobId: 'xCG234nd6',
-            clientName: 'Raihanul Haque',
-            contactNumber: '555 555 555',
-            make: 'Toyota',
-            model: 'Fielder',
-            year: '2005',
-            services: 'Paint job, wheel change, mobil change, howler installation, engine overhaul',
-            costing: '50000',
-            serviceCharge: '15000',
-            dateCreated: '3-8-2018',
-            timeCreated: '11:12:40 am',
-            due: '65000'
-        },
-        {
-            jobId: 'xCG234nd7',
-            clientName: 'Hasib Zunair',
-            contactNumber: '666 666 666',
-            make: 'Toyota',
-            model: 'Axios',
-            year: '2010',
-            services: 'New gear box installation',
-            costing: '80000',
-            serviceCharge: '18000',
-            dateCreated: '20-3-2019',
-            timeCreated: '5:22:30 pm',
-            due: '98000'
-        },
-        {
-            jobId: 'xCG234nd8',
-            clientName: 'Shadman Ahmed',
-            contactNumber: '777 777 777',
-            make: 'Suzuki',
-            model: 'Gixxer Sf',
-            year: '2017',
-            services: 'Clutch repair',
-            costing: '2500',
-            serviceCharge: '2000',
-            dateCreated: '14-6-2020',
-            timeCreated: '6:42:30 pm',
-            due: '4500'
-        }
-    ],
-  },
+  initialState,
   reducers: {
     getAllJobs: state => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
@@ -117,6 +90,21 @@ export const jobsSlice = createSlice({
       state.value = state.value.filter(job => job.jobId !== jobId);
     },
   },
+  extraReducers: {
+    [getJobsAsync.pending]: (state, action) => {
+      state.status = 'loading'
+    },
+    [getJobsAsync.fulfilled]: (state, action) => {
+      state.status = 'succeeded'
+      // Add any fetched posts to the array
+      // state.jobs = state.jobs.concat(action.payload)
+      state.jobs = action.payload
+    },
+    [getJobsAsync.rejected]: (state, action) => {
+      state.status = 'failed'
+      state.error = action.error.message
+    }
+  }
 });
 
 export const { getAllJobs, addJob, editJob, deleteJob } = jobsSlice.actions;
@@ -148,6 +136,6 @@ export const deleteJobAsync = jobId => dispatch => {
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state) => state.counter.value)`
-export const selectJobs = state => state.jobs.value;
+export const selectJobs = state => state.jobs.jobs;
 
 export default jobsSlice.reducer;

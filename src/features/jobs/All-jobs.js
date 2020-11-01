@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route,useHistory, Redirect } from 'react-router-dom';
 import { selectJobs } from './jobsSlice.js';
 import './allJobStyles.css';
 import NumberFormat from 'react-number-format';
-import { deleteJobAsync } from './jobsSlice.js';
+import { deleteJobAsync, getJobsAsync } from './jobsSlice.js';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -17,6 +17,7 @@ const AllJobs = () => {
   const jobs = useSelector(selectJobs);
   const history = useHistory();
   const dispatch = useDispatch();
+  const jobStatus = useSelector(state => state.jobs.status);
 
   const [open, setOpen] = React.useState(false);
   const [dialogId, setDialogId] = React.useState('');
@@ -34,9 +35,15 @@ const AllJobs = () => {
     setDialogClient('');
   };
 
+  useEffect(() => {
+    if (jobStatus === 'idle') {
+        dispatch(getJobsAsync())
+      }
+    }, [jobStatus, dispatch])
+
     return (
         <div className="jobContainerParent">
-            {jobs.map((job) => (
+            {jobs && jobs.map((job) => (
                 <div className="jobRow" key={job.jobId}>
                     <div className="jobCol"><div>Invoice:</div> {job.jobId}</div>
                     <div className="jobCol"><div>Client Name:</div> {job.clientName}</div>
