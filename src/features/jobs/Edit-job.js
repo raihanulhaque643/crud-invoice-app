@@ -8,7 +8,7 @@ const EditJobForm = ({ match }) => {
   const { jobId } = match.params;
 
   const job = useSelector(state =>
-    state.jobs.value.find(job => job.jobId === jobId)
+    state.jobs.jobs.find(job => job.jobId === jobId)
   );
 
   const [clientName, setClientName] = useState(job.clientName);
