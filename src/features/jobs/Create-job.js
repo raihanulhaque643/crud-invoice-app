@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addJobAsync } from './jobsSlice.js';
+import { addJobAsyncPrepare } from './jobsSlice.js';
 import { BrowserRouter as Router, Switch, Route,useHistory, Redirect } from 'react-router-dom';
 import './createJobStyles.css';
 import NumberFormat from 'react-number-format';
@@ -36,7 +36,7 @@ const CreateJob = () => {
         e.preventDefault();
         if (clientName && contactNumber && make && model && year && services && costing && serviceCharge) {
             setErrorMessage('');
-            dispatch(addJobAsync(clientName,contactNumber,make,model,year,services,costing,serviceCharge));
+            dispatch(addJobAsyncPrepare(clientName,contactNumber,make,model,year,services,costing,serviceCharge));
             setClientName('');
             setContactNumber('');
             setMake('');

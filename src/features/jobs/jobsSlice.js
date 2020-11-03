@@ -9,9 +9,57 @@ export const getJobsAsync = createAsyncThunk('jobs/fetchJobs', async () => {
         response.push(doc.data())
     });
   });
-  console.log(response)
   return response
-})
+});
+
+export const addJobAsync = createAsyncThunk('jobs/addJob', async (data) => {
+  console.log(data);
+});
+
+export const addJobAsyncPrepare = (clientName,contactNumber,make,model,year,services,costing,serviceCharge) => dispatch => {
+  // console.log(jobId,clientName, contactNumber, make, year, services, costing, serviceCharge);
+
+  const due = Number(costing) + Number(serviceCharge);
+
+  let today = new Date();
+  // let dateCreated = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  let dateCreated = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+  const formatAMPM = (date) => {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    let strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
+  let timeCreated = formatAMPM(new Date);
+
+  const jobId = uuidv4();
+
+  const data = {
+    jobId,
+    clientName,
+    contactNumber, 
+    make,
+    model, 
+    year, 
+    services, 
+    costing, 
+    serviceCharge,
+    due,
+    dateCreated,
+    timeCreated
+  };
+
+  dispatch(addJobAsync(data));
+
+  // setTimeout(() => {
+  //   console.log(data);
+
+  // }, 1000);
+};
 
 const initialState = {
   jobs: [],
@@ -113,12 +161,6 @@ export const { getAllJobs, addJob, editJob, deleteJob } = jobsSlice.actions;
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
 // will call the thunk with the `dispatch` function as the first argument. Async
 // code can then be executed and other actions can be dispatched
-
-export const addJobAsync = (jobId,clientName, contactNumber, make, year, services, costing, serviceCharge) => dispatch => {
-  setTimeout(() => {
-    dispatch(addJob(jobId,clientName,contactNumber,make,year,services,costing, serviceCharge));
-  }, 1000);
-};
 
 export const editJobAsync = (jobId, clientName, contactNumber, make, year, services, costing, serviceCharge) => dispatch => {
   setTimeout(() => {
