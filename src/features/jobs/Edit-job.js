@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { editJobAsync } from './jobsSlice';
+import { editJobAsyncPrepare } from './jobsSlice';
 
 const EditJobForm = ({ match }) => {
   const { jobId } = match.params;
@@ -20,6 +20,8 @@ const EditJobForm = ({ match }) => {
   const [costing, setCosting] = useState(job.costing);
   const [serviceCharge, setServiceCharge] = useState(job.serviceCharge);
   const [due, setDue] = useState(job.due);
+  const dateCreated = job.dateCreated;
+  const timeCreated = job.timeCreated;
   const [errorMessage, setErrorMessage] = useState('');
 
 
@@ -40,7 +42,7 @@ const EditJobForm = ({ match }) => {
     e.preventDefault();
     if (clientName && contactNumber && make && model && year && services && costing && serviceCharge && due) {
       setErrorMessage('');
-      dispatch(editJobAsync({ jobId: jobId, clientName, contactNumber, make, model, year, services, costing, serviceCharge, due}))
+      dispatch(editJobAsyncPrepare( jobId, clientName, contactNumber, make, model, year, services, costing, serviceCharge, due, dateCreated, timeCreated))
       history.push('/home/all-jobs')
     } else {
       window.scrollTo(0, 0);

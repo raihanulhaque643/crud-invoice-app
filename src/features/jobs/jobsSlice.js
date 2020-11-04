@@ -9,7 +9,7 @@ export const getJobsAsync = createAsyncThunk('jobs/fetchJobs', async () => {
         response.push(doc.data())
     });
   });
-  return response
+  return response;
 });
 
 export const addJobAsync = createAsyncThunk('jobs/addJob', async (data) => {
@@ -65,6 +65,68 @@ export const addJobAsyncPrepare = (clientName,contactNumber,make,model,year,serv
 
   dispatch(addJobAsync(data));
 };
+
+export const editJobAsync = createAsyncThunk('jobs/editJob', async (data) => {
+  const id = data.jobId;
+  const { jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated, dateUpdated, timeUpdated } = data;
+  db.collection("jobs").doc(id).set({
+    jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated, dateUpdated, timeUpdated 
+  })
+  .then(function() {
+    console.log("Document successfully updated!");
+  })
+  .catch(function(error) {
+    console.error("Error writing document: ", error);
+});
+});
+
+export const editJobAsyncPrepare = (jobId, clientName, contactNumber, make, model, year, services, costing, serviceCharge, due, dateCreated, timeCreated) => dispatch => {
+  // console.log(jobId,clientName, contactNumber, make, year, services, costing, serviceCharge);
+
+  let today = new Date();
+
+  let dateUpdated = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+  const formatAMPM = (date) => {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    let strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
+  let timeUpdated = formatAMPM(new Date);
+
+  const data = {
+    jobId,
+    clientName,
+    contactNumber, 
+    make,
+    model, 
+    year, 
+    services, 
+    costing, 
+    serviceCharge,
+    due,
+    dateCreated,
+    timeCreated,
+    dateUpdated,
+    timeUpdated
+  };
+
+  dispatch(editJobAsync(data));
+};
+
+export const deleteJobAsync = createAsyncThunk('jobs/deleteJob', async (id) => {
+  db.collection("jobs").doc(id).delete()
+  .then(function() {
+    console.log("Document successfully deleted!");
+  })
+  .catch(function(error) {
+    console.error("Error removing document: ", error);
+  });
+});
 
 const initialState = {
   jobs: [],
@@ -166,19 +228,6 @@ export const { getAllJobs, addJob, editJob, deleteJob } = jobsSlice.actions;
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
 // will call the thunk with the `dispatch` function as the first argument. Async
 // code can then be executed and other actions can be dispatched
-
-export const editJobAsync = (jobId, clientName, contactNumber, make, year, services, costing, serviceCharge) => dispatch => {
-  setTimeout(() => {
-    dispatch(editJob(jobId,clientName,contactNumber,make,year,services,costing, serviceCharge));
-  }, 1000);
-};
-
-export const deleteJobAsync = jobId => dispatch => {
-  console.log(jobId);
-  setTimeout(() => {
-    dispatch(deleteJob({jobId}));
-  }, 1000);
-};
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

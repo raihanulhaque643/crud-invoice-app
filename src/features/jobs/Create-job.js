@@ -32,7 +32,6 @@ const CreateJob = () => {
     const onServiceChargeChanged = e => setServiceCharge(e.target.value);
 
     const onCreateJobClicked = (e) => {
-        console.log(serviceCharge);
         e.preventDefault();
         if (clientName && contactNumber && make && model && year && services && costing && serviceCharge) {
             setErrorMessage('');
