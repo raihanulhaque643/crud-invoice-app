@@ -61,6 +61,7 @@ const Pdf = ({match}) => {
       state.jobs.jobs.find(job => job.jobId === jobId)
     );
     return(
+    <PDFViewer>
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
@@ -152,6 +153,7 @@ const Pdf = ({match}) => {
       </View>
     </Page>
   </Document>
+  </PDFViewer>
     )
 };
 
