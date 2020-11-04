@@ -12,12 +12,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const AllJobs = () => {
   const jobs = useSelector(selectJobs);
   const history = useHistory();
   const dispatch = useDispatch();
   const jobStatus = useSelector(state => state.jobs.status);
+//   const error = useSelector(state => state.jobs.error)
 
   const [open, setOpen] = React.useState(false);
   const [dialogId, setDialogId] = React.useState('');
@@ -38,13 +40,21 @@ const AllJobs = () => {
   useEffect(() => {
     if (jobStatus === 'idle') {
         dispatch(getJobsAsync())
-      }
+    } 
     }, [jobStatus, dispatch])
 
-    return (
-        <div className="jobContainerParent">
-            {jobs && jobs.map((job) => (
-                <div className="jobRow" key={job.jobId}>
+    let content;
+
+    if (jobStatus === 'loading') {
+      content = <div className="centerLoading"><CircularProgress color="secondary"/></div>
+    } else if (jobStatus === 'succeeded') {
+      // Sort jobs in reverse chronological order by datetime string
+      const orderedJobs = jobs
+        .slice()
+        .sort((a, b) => b.dateCreated.localeCompare(a.date))
+  
+      content = orderedJobs.map(job => (
+        <div className="jobRow" key={job.jobId}>
                     <div className="jobCol"><div>Invoice:</div> {job.jobId}</div>
                     <div className="jobCol"><div>Client Name:</div> {job.clientName}</div>
                     <div className="jobCol"><div>Contact:</div> {job.contactNumber}</div>
@@ -80,7 +90,15 @@ const AllJobs = () => {
                     <button className="jobDeleteButton" onClick={() => handleClickOpen(job)}>Delete</button>
                     </div>
                 </div>
-            ))};
+      ))
+    } else if (jobStatus === 'failed') {
+      content = <div>'Error!!!!'</div>
+    }
+
+    return (
+        <div className="jobContainerParent">
+            {content}
+            );
             
             {/* Confirm delete modal/dialog: */}
             <Dialog

@@ -81,7 +81,6 @@ export const editJobAsync = createAsyncThunk('jobs/editJob', async (data) => {
 });
 
 export const editJobAsyncPrepare = (jobId, clientName, contactNumber, make, model, year, services, costing, serviceCharge, due, dateCreated, timeCreated) => dispatch => {
-  // console.log(jobId,clientName, contactNumber, make, year, services, costing, serviceCharge);
 
   let today = new Date();
 
@@ -153,7 +152,6 @@ export const jobsSlice = createSlice({
         const dueAmount = Number(costing) + Number(serviceCharge);
 
         let today = new Date();
-        // let dateCreated = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         let dateCreated = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
         const formatAMPM = (date) => {
           let hours = date.getHours();
