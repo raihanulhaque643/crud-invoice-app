@@ -13,7 +13,17 @@ export const getJobsAsync = createAsyncThunk('jobs/fetchJobs', async () => {
 });
 
 export const addJobAsync = createAsyncThunk('jobs/addJob', async (data) => {
-  console.log(data);
+  const id = data.jobId;
+  const { jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated } = data;
+  db.collection("jobs").doc(id).set({
+    jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated
+  })
+  .then(function() {
+    console.log("Document successfully written!");
+  })
+  .catch(function(error) {
+    console.error("Error writing document: ", error);
+});
 });
 
 export const addJobAsyncPrepare = (clientName,contactNumber,make,model,year,services,costing,serviceCharge) => dispatch => {
@@ -22,7 +32,7 @@ export const addJobAsyncPrepare = (clientName,contactNumber,make,model,year,serv
   const due = Number(costing) + Number(serviceCharge);
 
   let today = new Date();
-  // let dateCreated = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
   let dateCreated = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
   const formatAMPM = (date) => {
     let hours = date.getHours();
@@ -54,11 +64,6 @@ export const addJobAsyncPrepare = (clientName,contactNumber,make,model,year,serv
   };
 
   dispatch(addJobAsync(data));
-
-  // setTimeout(() => {
-  //   console.log(data);
-
-  // }, 1000);
 };
 
 const initialState = {
