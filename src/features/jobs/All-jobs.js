@@ -60,7 +60,16 @@ const AllJobs = () => {
                             prefix={'Tk. '} />
                         </div>
                     </div>
-                    <div className="jobCol"><div>Billed on:</div> {job.dateCreated} {job.timeCreated}</div>
+                    <div className="jobCol">
+                    <div>Billed on:</div>
+                    {job.dateCreated} {job.timeCreated}
+                    
+                    {job.dateUpdated && 
+                    <div><div>Updated on:</div>
+                    {job.dateUpdated} {job.timeUpdated}</div>
+                    }
+
+                    </div>
                     <div className="jobCol">
                     <button className="jobViewButton" onClick={() => {history.push(`/home/invoices/${job.jobId}`)}}>View</button>
                     </div>
