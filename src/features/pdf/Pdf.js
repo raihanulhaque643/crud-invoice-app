@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet, PDFViewer } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 import { useSelector } from 'react-redux';
 import NumberFormat from 'react-number-format';
 
@@ -61,7 +61,6 @@ const Pdf = ({match}) => {
       state.jobs.jobs.find(job => job.jobId === jobId)
     );
     return(
-    <PDFViewer>
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
@@ -153,7 +152,6 @@ const Pdf = ({match}) => {
       </View>
     </Page>
   </Document>
-  </PDFViewer>
     )
 };
 

@@ -4,7 +4,9 @@ import { BrowserRouter as Router, Switch, Route,useHistory, Redirect } from 'rea
 import { selectJobs } from './jobsSlice.js';
 import './allJobStyles.css';
 import NumberFormat from 'react-number-format';
-import { deleteJobAsync, getJobsAsync } from './jobsSlice.js';
+import { deleteJobAsync, getAllJobs } from './jobsSlice.js';
+// import { getAllJobs  } from './jobsSlice';
+import { db } from '../../firebase/firebase';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -12,14 +14,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 const AllJobs = () => {
   const jobs = useSelector(selectJobs);
   const history = useHistory();
   const dispatch = useDispatch();
   const jobStatus = useSelector(state => state.jobs.status);
-//   const error = useSelector(state => state.jobs.error)
 
   const [open, setOpen] = React.useState(false);
   const [dialogId, setDialogId] = React.useState('');
@@ -38,23 +38,20 @@ const AllJobs = () => {
   };
 
   useEffect(() => {
-    if (jobStatus === 'idle') {
-        dispatch(getJobsAsync())
-    } 
-    }, [jobStatus, dispatch])
+    let response = [];
+    const unsub = db.collection("jobs").onSnapshot((querySnapshot) => {
+      response = []
+    querySnapshot.forEach((doc) => {
+        response.push(doc.data())
+    });
+    dispatch(getAllJobs(response));
+  });
+  })
 
-    let content;
-
-    if (jobStatus === 'loading') {
-      content = <div className="centerLoading"><CircularProgress color="secondary"/></div>
-    } else if (jobStatus === 'succeeded') {
-      // Sort jobs in reverse chronological order by datetime string
-      const orderedJobs = jobs
-        .slice()
-        .sort((a, b) => b.dateCreated.localeCompare(a.date))
-  
-      content = orderedJobs.map(job => (
-        <div className="jobRow" key={job.jobId}>
+    return (
+        <div className="jobContainerParent">
+            {jobs && jobs.map((job) => (
+                <div className="jobRow" key={job.jobId}>
                     <div className="jobCol"><div>Invoice:</div> {job.jobId}</div>
                     <div className="jobCol"><div>Client Name:</div> {job.clientName}</div>
                     <div className="jobCol"><div>Contact:</div> {job.contactNumber}</div>
@@ -90,15 +87,7 @@ const AllJobs = () => {
                     <button className="jobDeleteButton" onClick={() => handleClickOpen(job)}>Delete</button>
                     </div>
                 </div>
-      ))
-    } else if (jobStatus === 'failed') {
-      content = <div>'Error!!!!'</div>
-    }
-
-    return (
-        <div className="jobContainerParent">
-            {content}
-            );
+            ))};
             
             {/* Confirm delete modal/dialog: */}
             <Dialog
