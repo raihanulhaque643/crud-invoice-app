@@ -20,6 +20,8 @@ const AllJobs = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const jobStatus = useSelector(state => state.jobs.status);
+  const orderderJobsbyDate = jobs.slice().sort((a, b) => b.dateCreated.localeCompare(a.dateCreated));
+  const orderderJobsbyTime = orderderJobsbyDate.slice().sort((a, b) => b.timeCreated.localeCompare(a.timeCreated));
 
   const [open, setOpen] = React.useState(false);
   const [dialogId, setDialogId] = React.useState('');
@@ -38,6 +40,7 @@ const AllJobs = () => {
   };
 
   useEffect(() => {
+    let isMounted = true;
     let response = [];
     const unsub = db.collection("jobs").onSnapshot((querySnapshot) => {
       response = []
@@ -45,12 +48,15 @@ const AllJobs = () => {
         response.push(doc.data())
     });
     dispatch(getAllJobs(response));
+    return () => {
+        unsub();
+    }
   });
   })
 
     return (
         <div className="jobContainerParent">
-            {jobs && jobs.map((job) => (
+            {jobs && orderderJobsbyTime.map((job) => (
                 <div className="jobRow" key={job.jobId}>
                     <div className="jobCol"><div>Invoice:</div> {job.jobId}</div>
                     <div className="jobCol"><div>Client Name:</div> {job.clientName}</div>
