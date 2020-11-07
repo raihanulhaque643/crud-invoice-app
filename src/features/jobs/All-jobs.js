@@ -15,13 +15,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+
 const AllJobs = () => {
   const jobs = useSelector(selectJobs);
   const history = useHistory();
   const dispatch = useDispatch();
   const jobStatus = useSelector(state => state.jobs.status);
-  const orderderJobsbyDate = jobs.slice().sort((a, b) => b.dateCreated.localeCompare(a.dateCreated));
-  const orderderJobsbyTime = orderderJobsbyDate.slice().sort((a, b) => b.timeCreated.localeCompare(a.timeCreated));
+  const orderderJobs = jobs.slice().sort((a, b) => b.fullDateTime.localeCompare(a.fullDateTime));
 
   const [open, setOpen] = React.useState(false);
   const [dialogId, setDialogId] = React.useState('');
@@ -56,7 +56,7 @@ const AllJobs = () => {
 
     return (
         <div className="jobContainerParent">
-            {jobs && orderderJobsbyTime.map((job) => (
+            {jobs && orderderJobs.map((job) => (
                 <div className="jobRow" key={job.jobId}>
                     <div className="jobCol"><div>Invoice:</div> {job.jobId}</div>
                     <div className="jobCol"><div>Client Name:</div> {job.clientName}</div>

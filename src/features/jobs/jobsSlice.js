@@ -4,9 +4,9 @@ import { db } from '../../firebase/firebase';
 
 export const addJobAsync = createAsyncThunk('jobs/addJob', async (data) => {
   const id = data.jobId;
-  const { jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated } = data;
+  const { jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated, fullDateTime } = data;
   db.collection("jobs").doc(id).set({
-    jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated
+    jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated, fullDateTime
   })
   .then(function() {
     console.log("Document successfully written!");
@@ -36,6 +36,8 @@ export const addJobAsyncPrepare = (clientName,contactNumber,make,model,year,serv
   }
   let timeCreated = formatAMPM(new Date);
 
+  let fullDateTime = String(today);
+
   const jobId = uuidv4();
 
   const data = {
@@ -50,7 +52,8 @@ export const addJobAsyncPrepare = (clientName,contactNumber,make,model,year,serv
     serviceCharge,
     due,
     dateCreated,
-    timeCreated
+    timeCreated,
+    fullDateTime
   };
 
   dispatch(addJobAsync(data));
@@ -58,9 +61,9 @@ export const addJobAsyncPrepare = (clientName,contactNumber,make,model,year,serv
 
 export const editJobAsync = createAsyncThunk('jobs/editJob', async (data) => {
   const id = data.jobId;
-  const { jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated, dateUpdated, timeUpdated } = data;
+  const { jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated, dateUpdated, timeUpdated, fullDateTime } = data;
   db.collection("jobs").doc(id).set({
-    jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated, dateUpdated, timeUpdated 
+    jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated, dateUpdated, timeUpdated, fullDateTime
   })
   .then(function() {
     console.log("Document successfully updated!");
@@ -87,6 +90,8 @@ export const editJobAsyncPrepare = (jobId, clientName, contactNumber, make, mode
   }
   let timeUpdated = formatAMPM(new Date);
 
+  let fullDateTime = String(today);
+
   const data = {
     jobId,
     clientName,
@@ -101,7 +106,8 @@ export const editJobAsyncPrepare = (jobId, clientName, contactNumber, make, mode
     dateCreated,
     timeCreated,
     dateUpdated,
-    timeUpdated
+    timeUpdated,
+    fullDateTime
   };
 
   dispatch(editJobAsync(data));
