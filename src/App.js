@@ -4,12 +4,26 @@ import React from 'react';
 import './App.css';
 import AuthPage from './pages/AuthPage';
 import ResponsiveDrawer from './pages/ResponsiveDrawer';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
+    <ToastContainer
+      position="bottom-center"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={true}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+    />
+    
       <Switch>
         <Route exact path="/">
           <AuthPage />

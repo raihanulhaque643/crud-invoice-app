@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../firebase/firebase';
+import { ToastContainer, toast } from 'react-toastify';
 
 export const addJobAsync = createAsyncThunk('jobs/addJob', async (data) => {
   const id = data.jobId;
@@ -10,9 +11,27 @@ export const addJobAsync = createAsyncThunk('jobs/addJob', async (data) => {
   })
   .then(function() {
     console.log("Document successfully written!");
+    toast.dark('Successfully added! 😃', {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      });
   })
   .catch(function(error) {
     console.error("Error writing document: ", error);
+    toast.error('Execution failed! 😨', {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      });
 });
 });
 
@@ -67,9 +86,27 @@ export const editJobAsync = createAsyncThunk('jobs/editJob', async (data) => {
   })
   .then(function() {
     console.log("Document successfully updated!");
+    toast.dark('Successfully updated! 😃', {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      });
   })
   .catch(function(error) {
     console.error("Error writing document: ", error);
+    toast.error('Execution failed! 😨', {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      });
 });
 });
 
@@ -117,9 +154,27 @@ export const deleteJobAsync = createAsyncThunk('jobs/deleteJob', async (id) => {
   db.collection("jobs").doc(id).delete()
   .then(function() {
     console.log("Document successfully deleted!");
+    toast.dark('Successfully deleted! 😃', {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+      });
   })
   .catch(function(error) {
     console.error("Error removing document: ", error);
+    toast.error('Execution failed! 😨', {
+      position: "bottom-center",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
   });
 });
 

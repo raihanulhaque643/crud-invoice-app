@@ -43,7 +43,8 @@ const EditJobForm = ({ match }) => {
     if (clientName && contactNumber && make && model && year && services && costing && serviceCharge && due) {
       setErrorMessage('');
       dispatch(editJobAsyncPrepare( jobId, clientName, contactNumber, make, model, year, services, costing, serviceCharge, due, dateCreated, timeCreated))
-      history.push('/home/all-jobs')
+      history.push('/home/all-jobs');
+      window.scrollTo(0, 0);
     } else {
       window.scrollTo(0, 0);
       setErrorMessage('** All fields are required! **');

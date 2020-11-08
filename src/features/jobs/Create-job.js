@@ -45,7 +45,7 @@ const CreateJob = () => {
             setCosting('');
             setServiceCharge('');
             history.push('/home/all-jobs');
-            document.documentElement.scrollTop = 0;
+            window.scrollTo(0, 0);
         } else {
             window.scrollTo(0, 0);
             setErrorMessage('** All fields are required! **');
