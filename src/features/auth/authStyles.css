@@ -47,14 +47,14 @@ form > button {
 }
 
 form > button:hover {
-    background-color:black;
-    color: white;
+    background-color: gainsboro;
+    color: black;
     cursor: pointer;
-    transform: scale(.96);
 }
 
 form > button:active {
-    transform: scale(0.92);
+    background-color: black;
+    color: white;
 }
 
 .container {
