@@ -55,7 +55,7 @@ const Signin = () => {
                     value={password}
                     onChange={onPasswordChanged}
                     />
-                    <button onClick={onSubmit}>Sign in</button>
+                    <button onClick={onSubmit}>Login</button>
                 </form>
         </div>
     )
