@@ -91,9 +91,6 @@ function ResponsiveDrawer(props) {
         history.push('/home/all-jobs');
         break;
       case 1:
-        history.push('/home/invoices');
-        break;
-      case 2:
         auth.signOut().then(function() {
           // Sign-out successful.
           localStorage.setItem("currentUser", '');
@@ -112,12 +109,11 @@ function ResponsiveDrawer(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {['All Jobs', 'Invoices', 'Logout'].map((text, index) => (
+        {['All Jobs', 'Logout'].map((text, index) => (
           <ListItem button key={text} onClick={() => pushFirstBlockRoute(index)}>
             <ListItemIcon>
             {index === 0 && <AllJobsIcon /> }
-            {index === 1 && <InvoiceIcon />}
-            {index === 2 && <ExitToAppIcon />}
+            {index === 1 && <ExitToAppIcon />}
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
