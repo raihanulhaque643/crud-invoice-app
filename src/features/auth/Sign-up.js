@@ -10,6 +10,7 @@ const Signup = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const [hourglass, sethourglass] = useState(false);
 
     const onEmailChanged = e => setEmail(e.target.value);
     const onPasswordChanged = e => setPassword(e.target.value);
@@ -19,6 +20,7 @@ const Signup = () => {
     const history = useHistory();
 
     const onSubmit = async e => {
+        sethourglass(true);
         e.preventDefault();
         setSuccessMessage('');
         setErrorMessage('');
@@ -28,17 +30,22 @@ const Signup = () => {
                 try {
                     const success = await auth.createUserWithEmailAndPassword(email, password);
                     if (success) {
+                        sethourglass(false);
                         setSuccessMessage('Account created successfully!');
                     }       
                 } catch (error) {
+                    sethourglass(false);
+                    setErrorMessage(`${error}`)
                     console.error(error);
                 }
                     
                   
             } else {
+                sethourglass(false);
                 setErrorMessage('Passwords do not match!');
             }
         } else {
+            sethourglass(false);
             setErrorMessage('** All fields are required! **');
         }
     }
@@ -74,7 +81,7 @@ const Signup = () => {
             value={confirmPassword}
             onChange={onConfirmPasswordChanged} 
             />
-            <button onClick={onSubmit}>Sign up</button>
+            <button onClick={onSubmit}>Sign up{hourglass && <div class="lds-hourglass"></div>}</button>
         </form>
     </div>
     )

@@ -8,6 +8,7 @@ const Signin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [hourglass, sethourglass] = useState(false);
 
     const onEmailChanged = e => setEmail(e.target.value);
     const onPasswordChanged = e => setPassword(e.target.value);
@@ -15,23 +16,28 @@ const Signin = () => {
     const history = useHistory();
 
     const onSubmit = async e => {
+        sethourglass(true)
         setErrorMessage('');
         e.preventDefault();
         if(email && password){
             try {
                 const resp = await auth.signInWithEmailAndPassword(email, password);
                 if(resp){
+                    sethourglass(false);
                     history.push('/home');
                 } else {
+                    sethourglass(false);
                     alert('login failed')
                 }
                 setEmail('');
                 setPassword('');
             } catch (error) {
+                sethourglass(false);
                 setErrorMessage('Incorrect password');
                 console.log(error);
             }
         } else {
+            sethourglass(false);
             setErrorMessage('** All fields are required! **');
         }
     }
@@ -55,7 +61,7 @@ const Signin = () => {
                     value={password}
                     onChange={onPasswordChanged}
                     />
-                    <button onClick={onSubmit}>Login</button>
+                    <button onClick={onSubmit}>Login{hourglass && <div class="lds-hourglass"></div>}</button>
                 </form>
         </div>
     )
