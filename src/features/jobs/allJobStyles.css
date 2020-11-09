@@ -1,5 +1,6 @@
 .jobContainerParent {
-    background-color: rgb(48, 48, 48);
+    /* background-color: rgb(48, 48, 48); */
+    background-color: black;
     min-height: 100vh;
     max-height: auto;
     padding-top: 20px;

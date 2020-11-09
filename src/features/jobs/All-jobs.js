@@ -40,7 +40,7 @@ const AllJobs = () => {
   };
 
   useEffect(() => {
-    let isMounted = true;
+    let unmounted = false;
     let response = [];
     const unsub = db.collection("jobs").onSnapshot((querySnapshot) => {
       response = []
