@@ -12,6 +12,7 @@ const Pdf = ({match}) => {
 
   return (
     <div className="pdfContainer">
+    <div className="pageContainer">
       <div className="pdfHeader">
         <div className="pdfColumnLeft">
           <span className="headerTitle">Car Garage</span> <br/>
@@ -29,9 +30,26 @@ const Pdf = ({match}) => {
         Invoice
       </div>
 
-      <div className="body-one">
-      Order Details: <br/>
-        {job.services}
+      <div className="body-two noBorder">
+        <div className="pdfColumnLeft">
+          Invoice number: {job.jobId}
+        </div>
+      </div>
+
+      <div className="body-two noBorder">
+        <div className="pdfColumnLeft">
+          Client: {job.clientName} {job.contactNumber}
+        </div>
+      </div>
+
+      <div className="body-two noBorder">
+        <div className="pdfColumnLeft">
+          Vehicle: {job.make} {job.model} {job.year}
+        </div>
+      </div>
+
+      <div className="body-one noBorder">
+      Order Details: {job.services}
       </div>
 
       <div className="body-two">
@@ -93,7 +111,8 @@ const Pdf = ({match}) => {
       </div>
 
     </div>
+    </div>
   )
 }
 
-export default Pdf
+export default Pdf;

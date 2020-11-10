@@ -5,8 +5,14 @@
     background-color: black;
     min-height: 100vh;
     max-height: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 
+.pageContainer {
+    max-width: 595px;
+}
 .pdfHeader {
     padding: 5px;
     background-color: white;
