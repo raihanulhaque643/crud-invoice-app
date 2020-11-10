@@ -110,7 +110,7 @@ export const editJobAsync = createAsyncThunk('jobs/editJob', async (data) => {
 });
 });
 
-export const editJobAsyncPrepare = (jobId, clientName, contactNumber, make, model, year, services, costing, serviceCharge, due, dateCreated, timeCreated) => dispatch => {
+export const editJobAsyncPrepare = (jobId, clientName, contactNumber, make, model, year, services, costing, serviceCharge, due, dateCreated, timeCreated, fullDateTime) => dispatch => {
 
   let today = new Date();
 
@@ -127,7 +127,7 @@ export const editJobAsyncPrepare = (jobId, clientName, contactNumber, make, mode
   }
   let timeUpdated = formatAMPM(new Date);
 
-  let fullDateTime = String(today);
+  // let fullDateTime = fullDateTime;
 
   const data = {
     jobId,

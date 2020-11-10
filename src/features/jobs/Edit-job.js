@@ -22,6 +22,7 @@ const EditJobForm = ({ match }) => {
   const [due, setDue] = useState(job.due);
   const dateCreated = job.dateCreated;
   const timeCreated = job.timeCreated;
+  const fullDateTime = job.fullDateTime;
   const [errorMessage, setErrorMessage] = useState('');
 
 
@@ -42,7 +43,7 @@ const EditJobForm = ({ match }) => {
     e.preventDefault();
     if (clientName && contactNumber && make && model && year && services && costing && serviceCharge && due) {
       setErrorMessage('');
-      dispatch(editJobAsyncPrepare( jobId, clientName, contactNumber, make, model, year, services, costing, serviceCharge, due, dateCreated, timeCreated))
+      dispatch(editJobAsyncPrepare( jobId, clientName, contactNumber, make, model, year, services, costing, serviceCharge, due, dateCreated, timeCreated, fullDateTime))
       history.push('/home/all-jobs');
       window.scrollTo(0, 0);
     } else {

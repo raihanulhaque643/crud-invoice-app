@@ -13,6 +13,7 @@ function App() {
   return (
     <div className="App">
     <ToastContainer
+      newestOnTop
       position="bottom-center"
       autoClose={5000}
       hideProgressBar={false}
