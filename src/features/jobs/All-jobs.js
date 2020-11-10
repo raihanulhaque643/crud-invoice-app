@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route,useHistory, Redirect } from 'react-router-dom';
 import { selectJobs } from './jobsSlice.js';
@@ -21,6 +21,7 @@ const AllJobs = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const jobStatus = useSelector(state => state.jobs.status);
+  const [hourglass, sethourglass] = useState(true);
   const orderderJobs = jobs.slice().sort((a, b) => b.fullDateTime.localeCompare(a.fullDateTime));
 
   const [open, setOpen] = React.useState(false);
@@ -39,6 +40,79 @@ const AllJobs = () => {
     setDialogClient('');
   };
 
+  let content;
+
+  if(!jobs.length){
+    content = <div className="centerHourglass"><div className="lds-hourglass"></div></div>
+  } else {
+      content = <div>{orderderJobs.map((job) => (
+        <div className="jobRow" key={job.jobId}>
+            <div className="jobCol"><div>Invoice:</div> {job.jobId}</div>
+            <div className="jobCol"><div>Client Name:</div> {job.clientName}</div>
+            <div className="jobCol"><div>Contact:</div> {job.contactNumber}</div>
+            <div className="jobCol"><div>Model:</div> {job.model}</div>
+            {/* <div className="jobCol"><div>Services:</div> {job.services}</div> */}
+            <div className="jobCol"><div>Due:</div>
+                <div className={`${job.due !== '0' ? "duesUncleared" : ""}`}>
+                    <NumberFormat 
+                    value={`${job.due}`} 
+                    displayType={'text'} 
+                    thousandSeparator={true} 
+                    thousandsGroupStyle="lakh" 
+                    prefix={'Tk. '} />
+                </div>
+            </div>
+            <div className="jobCol">
+            <div>Billed on:</div>
+            {job.dateCreated} {job.timeCreated}
+            
+            {job.dateUpdated && 
+            <div><div>Updated on:</div>
+            {job.dateUpdated} {job.timeUpdated}</div>
+            }
+
+            </div>
+            <div className="jobCol">
+            <button className="jobViewButton" onClick={() => {history.push(`/home/invoices/${job.jobId}`)}}>View</button>
+            </div>
+            <div className="jobCol">
+            <button className="jobEditButton" onClick={() => {history.push(`/home/edit-job/${job.jobId}`)}}>Edit</button>
+            </div>
+            <div className="jobCol">
+            <button className="jobDeleteButton" onClick={() => handleClickOpen(job)}>Delete</button>
+            </div>
+        </div>
+    ))};
+    
+    {/* Confirm delete modal/dialog: */}
+    {<Dialog
+        key={dialogId}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        >
+        {/* <DialogTitle id="alert-dialog-title">{`${dialogId}`}</DialogTitle> */}
+        <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete invoice of <span style={{fontWeight: 'bold'}}>{dialogClient}</span>?<br/>
+            <small>This action can't be undone.</small>
+        </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+        <Button onClick={handleClose} color="default">
+            Cancel
+        </Button>
+        <Button onClick={() => {dispatch(deleteJobAsync(dialogId));setOpen(false)}} variant="contained" color="secondary" autoFocus>
+            Confirm
+        </Button>
+        </DialogActions>
+        </Dialog>}
+
+    <button className="addJobButton" onClick={() => {history.push('/home/create-jobs')}}>+</button>
+    </div>
+  }
+
   useEffect(() => {
     let unmounted = false;
     let response = [];
@@ -54,73 +128,11 @@ const AllJobs = () => {
   });
   })
 
+
+
     return (
         <div className="jobContainerParent">
-            {jobs && orderderJobs.map((job) => (
-                <div className="jobRow" key={job.jobId}>
-                    <div className="jobCol"><div>Invoice:</div> {job.jobId}</div>
-                    <div className="jobCol"><div>Client Name:</div> {job.clientName}</div>
-                    <div className="jobCol"><div>Contact:</div> {job.contactNumber}</div>
-                    <div className="jobCol"><div>Model:</div> {job.model}</div>
-                    {/* <div className="jobCol"><div>Services:</div> {job.services}</div> */}
-                    <div className="jobCol"><div>Due:</div>
-                        <div className={`${job.due !== '0' ? "duesUncleared" : ""}`}>
-                            <NumberFormat 
-                            value={`${job.due}`} 
-                            displayType={'text'} 
-                            thousandSeparator={true} 
-                            thousandsGroupStyle="lakh" 
-                            prefix={'Tk. '} />
-                        </div>
-                    </div>
-                    <div className="jobCol">
-                    <div>Billed on:</div>
-                    {job.dateCreated} {job.timeCreated}
-                    
-                    {job.dateUpdated && 
-                    <div><div>Updated on:</div>
-                    {job.dateUpdated} {job.timeUpdated}</div>
-                    }
-
-                    </div>
-                    <div className="jobCol">
-                    <button className="jobViewButton" onClick={() => {history.push(`/home/invoices/${job.jobId}`)}}>View</button>
-                    </div>
-                    <div className="jobCol">
-                    <button className="jobEditButton" onClick={() => {history.push(`/home/edit-job/${job.jobId}`)}}>Edit</button>
-                    </div>
-                    <div className="jobCol">
-                    <button className="jobDeleteButton" onClick={() => handleClickOpen(job)}>Delete</button>
-                    </div>
-                </div>
-            ))};
-            
-            {/* Confirm delete modal/dialog: */}
-            <Dialog
-                key={dialogId}
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-                >
-                {/* <DialogTitle id="alert-dialog-title">{`${dialogId}`}</DialogTitle> */}
-                <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    Are you sure you want to delete invoice of <span style={{fontWeight: 'bold'}}>{dialogClient}</span>?<br/>
-                    <small>This action can't be undone.</small>
-                </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                <Button onClick={handleClose} color="default">
-                    Cancel
-                </Button>
-                <Button onClick={() => {dispatch(deleteJobAsync(dialogId));setOpen(false)}} variant="contained" color="secondary" autoFocus>
-                    Confirm
-                </Button>
-                </DialogActions>
-                </Dialog>
-
-            <button className="addJobButton" onClick={() => {history.push('/home/create-jobs')}}>+</button>
+            {content}
         </div>
     )
 }
