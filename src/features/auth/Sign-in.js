@@ -61,7 +61,7 @@ const Signin = () => {
                     value={password}
                     onChange={onPasswordChanged}
                     />
-                    <button onClick={onSubmit}>Login{hourglass && <div class="lds-hourglass"></div>}</button>
+                    <button onClick={onSubmit}>Login{hourglass && <div className="lds-hourglass"></div>}</button>
                 </form>
         </div>
     )
