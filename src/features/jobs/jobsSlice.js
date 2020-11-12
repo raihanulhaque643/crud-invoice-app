@@ -3,6 +3,18 @@ import { v4 as uuidv4 } from 'uuid';
 import { db } from '../../firebase/firebase';
 import { ToastContainer, toast } from 'react-toastify';
 
+export const fetchJobs = createAsyncThunk('jobs/fetchJobs', async () => {
+  const ref = db.collection("jobs").orderBy("fullDateTime", "desc");
+  const response = await ref.get().then((querySnapshot) => {
+    let jobsArray =[];
+    querySnapshot.forEach(doc => {
+      jobsArray.push(doc.data());
+    })
+    return jobsArray;
+  })
+  return response
+})
+
 export const addJobAsync = createAsyncThunk('jobs/addJob', async (data) => {
   const id = data.jobId;
   const { jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated, fullDateTime } = data;
@@ -194,6 +206,20 @@ export const jobsSlice = createSlice({
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       state.jobs = action.payload;
+    }
+  },
+  extraReducers: {
+    [fetchJobs.pending]: (state, action) => {
+      state.status = 'loading'
+    },
+    [fetchJobs.fulfilled]: (state, action) => {
+      state.status = 'succeeded'
+      // Add any fetched posts to the array
+      state.jobs = state.jobs.concat(action.payload)
+    },
+    [fetchJobs.rejected]: (state, action) => {
+      state.status = 'failed'
+      state.error = action.error.message
     }
   }
 });

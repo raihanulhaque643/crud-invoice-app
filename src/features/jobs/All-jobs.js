@@ -5,7 +5,7 @@ import { selectJobs } from './jobsSlice.js';
 import './allJobStyles.css';
 import NumberFormat from 'react-number-format';
 import { deleteJobAsync, getAllJobs } from './jobsSlice.js';
-// import { getAllJobs  } from './jobsSlice';
+import { fetchJobs  } from './jobsSlice';
 import { db } from '../../firebase/firebase';
 
 import Button from '@material-ui/core/Button';
@@ -21,8 +21,7 @@ const AllJobs = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const jobStatus = useSelector(state => state.jobs.status);
-  const [hourglass, sethourglass] = useState(true);
-  const orderderJobs = jobs.slice().sort((a, b) => b.fullDateTime.localeCompare(a.fullDateTime));
+  const error = useSelector(state => state.jobs.error);
 
   const [open, setOpen] = React.useState(false);
   const [dialogId, setDialogId] = React.useState('');
@@ -42,12 +41,12 @@ const AllJobs = () => {
 
   let content;
 
-  if(!jobs.length){
+  if(jobStatus === 'loading'){
     content = <div className="centerHourglass"><div className="lds-hourglass"></div></div>
-  } else {
-      content = <div>{orderderJobs.map((job) => (
+  } else if(jobStatus === 'succeeded') {
+      content = <div>{jobs.map((job) => (
         <div className="jobRow" key={job.jobId}>
-            <div className="jobCol"><div>Invoice:</div> {job.jobId}</div>
+            {/* <div className="jobCol"><div>Invoice:</div> {job.jobId}</div> */}
             <div className="jobCol"><div>Client Name:</div> {job.clientName}</div>
             <div className="jobCol"><div>Contact:</div> {job.contactNumber}</div>
             <div className="jobCol"><div>Model:</div> {job.model}</div>
@@ -111,22 +110,15 @@ const AllJobs = () => {
 
     <button className="addJobButton" onClick={() => {history.push('/home/create-jobs')}}>+</button>
     </div>
+  } else if(jobStatus === 'failed') {
+    content = <div style={{color: "white"}}>{error}</div>
   }
 
   useEffect(() => {
-    let unmounted = false;
-    let response = [];
-    const unsub = db.collection("jobs").onSnapshot((querySnapshot) => {
-      response = []
-    querySnapshot.forEach((doc) => {
-        response.push(doc.data())
-    });
-    dispatch(getAllJobs(response));
-    return () => {
-        unsub();
+    if (jobStatus === 'idle') {
+      dispatch(fetchJobs());
     }
-  });
-  })
+  }, [jobStatus, dispatch])
 
 
 
