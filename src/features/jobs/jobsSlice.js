@@ -215,7 +215,8 @@ export const jobsSlice = createSlice({
     [fetchJobs.fulfilled]: (state, action) => {
       state.status = 'succeeded'
       // Add any fetched posts to the array
-      state.jobs = action.payload
+      state.jobs = [];
+      state.jobs = state.jobs.concat(action.payload);
     },
     [fetchJobs.rejected]: (state, action) => {
       state.status = 'failed'
@@ -226,8 +227,6 @@ export const jobsSlice = createSlice({
     },
     [addJobAsync.fulfilled]: (state, action) => {
       state.status = 'idle'
-      // Add any fetched posts to the array
-      fetchJobs();
     },
     [addJobAsync.rejected]: (state, action) => {
       state.status = 'failed'
@@ -238,8 +237,6 @@ export const jobsSlice = createSlice({
     },
     [editJobAsync.fulfilled]: (state, action) => {
       state.status = 'idle'
-      // Add any fetched posts to the array
-      fetchJobs();
     },
     [editJobAsync.rejected]: (state, action) => {
       state.status = 'failed'
@@ -250,8 +247,6 @@ export const jobsSlice = createSlice({
     },
     [deleteJobAsync.fulfilled]: (state, action) => {
       state.status = 'idle'
-      // Add any fetched posts to the array
-      fetchJobs();
     },
     [deleteJobAsync.rejected]: (state, action) => {
       state.status = 'failed'
