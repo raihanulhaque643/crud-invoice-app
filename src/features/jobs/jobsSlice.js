@@ -67,7 +67,7 @@ export const addJobAsyncPrepare = (clientName,contactNumber,make,model,year,serv
   }
   let timeCreated = formatAMPM(new Date);
 
-  let fullDateTime = String(today);
+  let fullDateTime = today;
 
   const jobId = uuidv4();
 
@@ -215,9 +215,21 @@ export const jobsSlice = createSlice({
     [fetchJobs.fulfilled]: (state, action) => {
       state.status = 'succeeded'
       // Add any fetched posts to the array
-      state.jobs = state.jobs.concat(action.payload)
+      state.jobs = action.payload
     },
     [fetchJobs.rejected]: (state, action) => {
+      state.status = 'failed'
+      state.error = action.error.message
+    },
+    [addJobAsync.pending]: (state, action) => {
+      state.status = 'loading'
+    },
+    [addJobAsync.fulfilled]: (state, action) => {
+      state.status = 'idle'
+      // Add any fetched posts to the array
+      fetchJobs();
+    },
+    [addJobAsync.rejected]: (state, action) => {
       state.status = 'failed'
       state.error = action.error.message
     }

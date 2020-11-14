@@ -109,7 +109,7 @@ function ResponsiveDrawer(props) {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {['All Jobs', 'Logout'].map((text, index) => (
+        {['Jobs', 'Logout'].map((text, index) => (
           <ListItem button key={text} onClick={() => pushFirstBlockRoute(index)}>
             <ListItemIcon>
             {index === 0 && <AllJobsIcon /> }
