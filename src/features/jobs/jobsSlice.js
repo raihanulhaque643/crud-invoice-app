@@ -232,6 +232,30 @@ export const jobsSlice = createSlice({
     [addJobAsync.rejected]: (state, action) => {
       state.status = 'failed'
       state.error = action.error.message
+    },
+    [editJobAsync.pending]: (state, action) => {
+      state.status = 'loading'
+    },
+    [editJobAsync.fulfilled]: (state, action) => {
+      state.status = 'idle'
+      // Add any fetched posts to the array
+      fetchJobs();
+    },
+    [editJobAsync.rejected]: (state, action) => {
+      state.status = 'failed'
+      state.error = action.error.message
+    },
+    [deleteJobAsync.pending]: (state, action) => {
+      state.status = 'loading'
+    },
+    [deleteJobAsync.fulfilled]: (state, action) => {
+      state.status = 'idle'
+      // Add any fetched posts to the array
+      fetchJobs();
+    },
+    [deleteJobAsync.rejected]: (state, action) => {
+      state.status = 'failed'
+      state.error = action.error.message
     }
   }
 });
