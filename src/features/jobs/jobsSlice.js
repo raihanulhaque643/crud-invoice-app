@@ -21,30 +21,6 @@ export const addJobAsync = createAsyncThunk('jobs/addJob', async (data) => {
   db.collection("jobs").doc(id).set({
     jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated, fullDateTime
   })
-  .then(function() {
-    console.log("Document successfully written!");
-    toast.dark('Successfully added! 😃', {
-      position: "bottom-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      progress: undefined,
-      });
-  })
-  .catch(function(error) {
-    console.error("Error writing document: ", error);
-    toast.error('Execution failed! 😨', {
-      position: "bottom-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      progress: undefined,
-      });
-});
 });
 
 export const addJobAsyncPrepare = (clientName,contactNumber,make,model,year,services,costing,serviceCharge) => dispatch => {
@@ -93,33 +69,9 @@ export const addJobAsyncPrepare = (clientName,contactNumber,make,model,year,serv
 export const editJobAsync = createAsyncThunk('jobs/editJob', async (data) => {
   const id = data.jobId;
   const { jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated, dateUpdated, timeUpdated, fullDateTime } = data;
-  db.collection("jobs").doc(id).set({
+  const response = await db.collection("jobs").doc(id).set({
     jobId, clientName,contactNumber,make,model,year,services,costing,serviceCharge, due, dateCreated, timeCreated, dateUpdated, timeUpdated, fullDateTime
   })
-  .then(function() {
-    console.log("Document successfully updated!");
-    toast.dark('Successfully updated! 😃', {
-      position: "bottom-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      progress: undefined,
-      });
-  })
-  .catch(function(error) {
-    console.error("Error writing document: ", error);
-    toast.error('Execution failed! 😨', {
-      position: "bottom-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      progress: undefined,
-      });
-});
 });
 
 export const editJobAsyncPrepare = (jobId, clientName, contactNumber, make, model, year, services, costing, serviceCharge, due, dateCreated, timeCreated, fullDateTime) => dispatch => {
@@ -164,30 +116,6 @@ export const editJobAsyncPrepare = (jobId, clientName, contactNumber, make, mode
 
 export const deleteJobAsync = createAsyncThunk('jobs/deleteJob', async (id) => {
   db.collection("jobs").doc(id).delete()
-  .then(function() {
-    console.log("Document successfully deleted!");
-    toast.dark('Successfully deleted! 😃', {
-      position: "bottom-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: false,
-      progress: undefined,
-      });
-  })
-  .catch(function(error) {
-    console.error("Error removing document: ", error);
-    toast.error('Execution failed! 😨', {
-      position: "bottom-center",
-      autoClose: 5000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      });
-  });
 });
 
 const initialState = {
@@ -227,30 +155,84 @@ export const jobsSlice = createSlice({
     },
     [addJobAsync.fulfilled]: (state, action) => {
       state.status = 'idle'
+      toast.dark('Successfully added! 😃', {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        });
     },
     [addJobAsync.rejected]: (state, action) => {
       state.status = 'failed'
       state.error = action.error.message
+      toast.error('Execution failed! 😨', {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        });
     },
     [editJobAsync.pending]: (state, action) => {
       state.status = 'loading'
     },
     [editJobAsync.fulfilled]: (state, action) => {
       state.status = 'idle'
+      toast.dark('Successfully updated! 😃', {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        });
     },
     [editJobAsync.rejected]: (state, action) => {
       state.status = 'failed'
       state.error = action.error.message
+      toast.error('Execution failed! 😨', {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        });
     },
     [deleteJobAsync.pending]: (state, action) => {
       state.status = 'loading'
     },
     [deleteJobAsync.fulfilled]: (state, action) => {
       state.status = 'idle'
+      toast.dark('Successfully deleted! 😃', {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        });
     },
     [deleteJobAsync.rejected]: (state, action) => {
       state.status = 'failed'
       state.error = action.error.message
+      toast.error('Execution failed! 😨', {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        });
     }
   }
 });
