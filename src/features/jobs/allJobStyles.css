@@ -92,7 +92,7 @@
 }
 
 .searchContainer {
-    margin-right: 30px;
+    margin: 20px;
 }
 
 .searchInput {
@@ -117,6 +117,11 @@
     }
     .jobCol {
         margin: 5px 15px;
+    }
+    .paginationContainer {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
     }
   }
 
