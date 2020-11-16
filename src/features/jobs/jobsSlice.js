@@ -154,6 +154,7 @@ export const jobsSlice = createSlice({
       state.status = 'loading'
     },
     [addJobAsync.fulfilled]: (state, action) => {
+      state.jobs = [];
       state.status = 'idle'
       toast.dark('Successfully added! 😃', {
         position: "bottom-center",
@@ -182,6 +183,7 @@ export const jobsSlice = createSlice({
       state.status = 'loading'
     },
     [editJobAsync.fulfilled]: (state, action) => {
+      state.jobs = [];
       state.status = 'idle'
       toast.dark('Successfully updated! 😃', {
         position: "bottom-center",
@@ -210,6 +212,7 @@ export const jobsSlice = createSlice({
       state.status = 'loading'
     },
     [deleteJobAsync.fulfilled]: (state, action) => {
+      state.jobs = [];
       state.status = 'idle'
       toast.dark('Successfully deleted! 😃', {
         position: "bottom-center",
