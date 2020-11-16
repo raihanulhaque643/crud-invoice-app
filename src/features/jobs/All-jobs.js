@@ -14,6 +14,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Paginator from 'react-hooks-paginator';
 
 
 const AllJobs = () => {
@@ -22,6 +23,12 @@ const AllJobs = () => {
   const dispatch = useDispatch();
   const jobStatus = useSelector(state => state.jobs.status);
   const error = useSelector(state => state.jobs.error);
+
+  const [offset, setOffset] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentData, setCurrentData] = useState([]);
+  const [data, setData] = useState([]);
+  const pageLimit = 6;
 
   const [open, setOpen] = React.useState(false);
   const [dialogId, setDialogId] = React.useState('');
@@ -44,7 +51,16 @@ const AllJobs = () => {
   if(jobStatus === 'loading'){
     content = <div className="centerHourglass"><div className="lds-hourglass"></div></div>
   } else if(jobStatus === 'succeeded') {
-      content = <div>{jobs.map((job) => (
+      content = <div>
+      <Paginator
+        totalRecords={jobs.length}
+        pageLimit={pageLimit}
+        pageNeighbours={1}
+        setOffset={setOffset}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+      {currentData.map((job) => (
         <div className="jobRow" key={job.jobId}>
             {/* <div className="jobCol"><div>Invoice:</div> {job.jobId}</div> */}
             <div className="jobCol"><div>Client Name:</div> {job.clientName}</div>
@@ -119,6 +135,14 @@ const AllJobs = () => {
       dispatch(fetchJobs());
     }
   }, [jobStatus, dispatch])
+
+  useEffect(() => {
+    setData(jobs);
+  }, []);
+
+  useEffect(() => {
+    setCurrentData(jobs.slice(offset, offset + pageLimit));
+  }, [offset, jobs]);
 
 
 
