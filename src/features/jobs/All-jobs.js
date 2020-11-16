@@ -28,7 +28,7 @@ const AllJobs = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentData, setCurrentData] = useState([]);
   const [data, setData] = useState([]);
-  const pageLimit = 6;
+  const pageLimit = 5;
 
   const [open, setOpen] = React.useState(false);
   const [dialogId, setDialogId] = React.useState('');
@@ -52,6 +52,9 @@ const AllJobs = () => {
     content = <div className="centerHourglass"><div className="lds-hourglass"></div></div>
   } else if(jobStatus === 'succeeded') {
       content = <div>
+
+      <div className="paginationContainer">      
+      <div>
       <Paginator
         totalRecords={jobs.length}
         pageLimit={pageLimit}
@@ -60,6 +63,12 @@ const AllJobs = () => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
+      </div>
+      <div className="searchContainer">
+        <input className="searchInput" type="text" placeholder=" Search by client name..." />
+      </div>
+      </div>
+
       {currentData.map((job) => (
         <div className="jobRow" key={job.jobId}>
             {/* <div className="jobCol"><div>Invoice:</div> {job.jobId}</div> */}
@@ -124,7 +133,19 @@ const AllJobs = () => {
         </DialogActions>
         </Dialog>}
 
+        <div className="paginationBottomContainer">
+        <Paginator
+        totalRecords={jobs.length}
+        pageLimit={pageLimit}
+        pageNeighbours={1}
+        setOffset={setOffset}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
+      </div>
+
     <button className="addJobButton" onClick={() => {history.push('/home/create-jobs')}}>+</button>
+
     </div>
   } else if(jobStatus === 'failed') {
     content = <div style={{color: "white"}}>{error}</div>

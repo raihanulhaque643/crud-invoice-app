@@ -80,6 +80,31 @@
     justify-content: center;
 }
 
+.paginationContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.paginationBottomContainer {
+    display: flex;
+    align-items: flex-start;
+}
+
+.searchContainer {
+    margin-right: 30px;
+}
+
+.searchInput {
+    padding: 8px;
+    outline: none;
+    background-color: black;
+    color: white;
+    border: none;
+    border-bottom: 1px solid grey;
+    width: 250px;
+}
+
 @media screen and (max-width: 1200px) {
     .jobRow {
         flex-direction: column;
