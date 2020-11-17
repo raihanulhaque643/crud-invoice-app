@@ -24,6 +24,9 @@ const AllJobs = () => {
   const jobStatus = useSelector(state => state.jobs.status);
   const error = useSelector(state => state.jobs.error);
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+
   const [offset, setOffset] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentData, setCurrentData] = useState([]);
@@ -33,6 +36,10 @@ const AllJobs = () => {
   const [open, setOpen] = React.useState(false);
   const [dialogId, setDialogId] = React.useState('');
   const [dialogClient, setDialogClient] = React.useState('');
+
+  const handleSearchInput = event => {
+    setSearchTerm(event.target.value);
+  };
 
   const handleClickOpen = (job) => {
     setOpen(true);
@@ -45,6 +52,12 @@ const AllJobs = () => {
     setDialogId('');
     setDialogClient('');
   };
+
+  const results = !searchTerm
+    ? currentData
+    : jobs.filter(job =>
+        job.clientName.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+      );
 
   let content;
 
@@ -65,11 +78,17 @@ const AllJobs = () => {
       />
       </div>
       <div className="searchContainer">
-        <input className="searchInput" type="text" placeholder=" Search by client name..." />
+        <input 
+        className="searchInput" 
+        type="text" 
+        placeholder=" Search by client name..."
+        value={searchTerm}
+        onChange={handleSearchInput}
+         />
       </div>
       </div>
 
-      {currentData.map((job) => (
+      {results.map((job) => (
         <div className="jobRow" key={job.jobId}>
             {/* <div className="jobCol"><div>Invoice:</div> {job.jobId}</div> */}
             <div className="jobCol"><div>Client Name:</div> {job.clientName}</div>
@@ -165,7 +184,12 @@ const AllJobs = () => {
     setCurrentData(jobs.slice(offset, offset + pageLimit));
   }, [offset, jobs]);
 
-
+  useEffect(() => {
+    const results = jobs.filter(job =>
+      job.clientName.toLowerCase().includes(searchTerm)
+    );
+    setSearchResults(results);
+  }, [searchTerm]);
 
     return (
         <div className="jobContainerParent">
