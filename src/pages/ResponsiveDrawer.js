@@ -45,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
     },
-    // backgroundColor: '#DC143C',
     background: 'rgb(25,25,25)',
     background: 'linear-gradient(90deg, rgba(25,25,25,1) 0%, rgba(121,81,81,1) 35%, rgba(94,16,16,1) 100%)'
   },
@@ -96,7 +95,7 @@ function ResponsiveDrawer(props) {
           localStorage.setItem("currentUser", '');
           history.push('/');
         }).catch(function(error) {
-          // An error happened.
+
         });
         break;
       default:
@@ -147,7 +146,6 @@ function ResponsiveDrawer(props) {
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
             container={container}
@@ -209,10 +207,6 @@ function ResponsiveDrawer(props) {
 }
 
 ResponsiveDrawer.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
 };
 

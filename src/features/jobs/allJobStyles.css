@@ -1,5 +1,4 @@
 .jobContainerParent {
-    /* background-color: rgb(48, 48, 48); */
     background-color: black;
     min-height: 100vh;
     max-height: auto;
@@ -8,7 +7,6 @@
 
 .jobRow{
     display: flex;
-    /* background-color: rgba(169, 169, 169, 0.356); */
     padding: 20px;
     margin: 20px;
     margin-top: 0px;
@@ -24,7 +22,6 @@
     display: flex;
     flex-direction: column;
     margin: 0px 15px;
-    /* width: 105px; */
     width: 100%;
 }
 

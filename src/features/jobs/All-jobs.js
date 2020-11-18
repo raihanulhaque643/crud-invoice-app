@@ -91,11 +91,9 @@ const AllJobs = () => {
 
       {results.map((job) => (
         <div className="jobRow" key={job.jobId}>
-            {/* <div className="jobCol"><div>Invoice:</div> {job.jobId}</div> */}
             <div className="jobCol"><div>Client Name:</div> {job.clientName}</div>
             <div className="jobCol"><div>Contact:</div> {job.contactNumber}</div>
             <div className="jobCol"><div>Model:</div> {job.model}</div>
-            {/* <div className="jobCol"><div>Services:</div> {job.services}</div> */}
             <div className="jobCol"><div>Due:</div>
                 <div className={`${job.due !== '0' ? "duesUncleared" : ""}`}>
                     <NumberFormat 
@@ -136,7 +134,6 @@ const AllJobs = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         >
-        {/* <DialogTitle id="alert-dialog-title">{`${dialogId}`}</DialogTitle> */}
         <DialogContent>
         <DialogContentText id="alert-dialog-description">
             Are you sure you want to delete invoice of <span style={{fontWeight: 'bold'}}>{dialogClient}</span>?<br/>
