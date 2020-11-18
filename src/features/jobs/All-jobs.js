@@ -151,7 +151,7 @@ const AllJobs = () => {
         </Dialog>}
 
         <div className="paginationBottomContainer">
-        { !searchResults && 
+        { !searchTerm && 
         <Paginator
         totalRecords={jobs.length}
         pageLimit={pageLimit}
