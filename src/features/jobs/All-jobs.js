@@ -68,6 +68,7 @@ const AllJobs = () => {
 
       <div className="paginationContainer">      
       <div>
+      {!searchTerm &&
       <Paginator
         totalRecords={jobs.length}
         pageLimit={pageLimit}
@@ -75,7 +76,7 @@ const AllJobs = () => {
         setOffset={setOffset}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
-      />
+      />}
       </div>
       <div className="searchContainer">
         <input 
@@ -153,6 +154,7 @@ const AllJobs = () => {
         </Dialog>}
 
         <div className="paginationBottomContainer">
+        { !searchResults && 
         <Paginator
         totalRecords={jobs.length}
         pageLimit={pageLimit}
@@ -161,6 +163,7 @@ const AllJobs = () => {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
+        }
       </div>
 
     <button className="addJobButton" onClick={() => {history.push('/home/create-jobs')}}>+</button>
